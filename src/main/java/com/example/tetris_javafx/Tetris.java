@@ -8,6 +8,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
@@ -68,12 +69,12 @@ public class Tetris extends Application {
     public void startOne() {
         gc.setStroke(Paint.valueOf("black"));
         gc.strokeLine(SIZE_WIDTH - 100, 0, SIZE_WIDTH - 100, 500);
+        gc.setFill(Paint.valueOf("black"));
+        gc.fillText("SCORES :  " + goal, SIZE_WIDTH - 95, 100);
+        gc.setFill(Paint.valueOf("red"));
+        gc.fillText("LEVEL :  " + thisLevel, SIZE_WIDTH - 95, 150);
         game = new Thread(() -> {
             while (!lost) {
-                gc.setFill(Paint.valueOf("black"));
-                gc.fillText("SCORES :  " + goal, SIZE_WIDTH - 95, 100);
-                gc.setFill(Paint.valueOf("red"));
-                gc.fillText("LEVEL :  " + thisLevel, SIZE_WIDTH - 95, 150);
                 convFigureToPixel();
                 try {
                     Thread.sleep(allLevel[thisLevel]);
@@ -145,7 +146,11 @@ public class Tetris extends Application {
         }
         for (int i = 0; i < COL; i++) {
             if (field[0][i] != null) {
-                System.exit(0);
+                gc.setFill(Paint.valueOf("black"));
+                gc.setFont(new Font("Times New Roman", 20));
+                gc.fillText("GAME OVER" , SIZE_WIDTH/2-50, SIZE_HIGH/2,100);
+                lost = true;
+                //System.exit(0);
             }
         }
     }
@@ -182,7 +187,6 @@ public class Tetris extends Application {
             }
         }
     }
-
     void clear() {
         for (int i = 0; i < 10; i++) {
             convFieldToPixel();
@@ -220,6 +224,10 @@ public class Tetris extends Application {
         }
         goal += 10;
         gc.clearRect(SIZE_WIDTH - 95, 0, SIZE_WIDTH - 95, 500);
+        gc.setFill(Paint.valueOf("black"));
+        gc.fillText("SCORES :  " + goal, SIZE_WIDTH - 95, 100);
+        gc.setFill(Paint.valueOf("red"));
+        gc.fillText("LEVEL :  " + thisLevel, SIZE_WIDTH - 95, 150);
 
     }
 
@@ -227,7 +235,7 @@ public class Tetris extends Application {
         for (int i = 0; i < COL; i++) {
             for (int j = 0; j < ROW; j++) {
                 if (field[j][i] != null) {
-                    if (field[j][Math.max(i, 1) - 1] == null || field[j][Math.min(8, j) + 1] == null) {
+                    if (field[j][Math.max(i, 1) - 1] == null && field[j][Math.min(8, j) + 1] == null) {
                         if(field[Math.min(j,19)+1][i] == null) {
                             assert field[j][i] != null;
                             field[j][i].drop();
