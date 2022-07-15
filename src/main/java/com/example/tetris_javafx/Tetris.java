@@ -235,7 +235,7 @@ public class Tetris extends Application {
                     }
                 } break;
             }
-        }
+        }draw();
     }
 
 

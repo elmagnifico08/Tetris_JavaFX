@@ -1,9 +1,6 @@
 package com.example.tetris_javafx;
 
 import Figures.*;
-
-import javafx.scene.paint.Color;
-
 import java.util.Arrays;
 
 public class Figure {

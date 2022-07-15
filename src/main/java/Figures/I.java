@@ -2,10 +2,7 @@ package Figures;
 
 import com.example.tetris_javafx.Block;
 import com.example.tetris_javafx.Figure;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
-import static java.awt.Color.*;
 
 public class I extends Figure {
     int num = 1;
