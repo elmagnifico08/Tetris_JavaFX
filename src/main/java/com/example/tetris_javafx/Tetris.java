@@ -68,9 +68,12 @@ public class Tetris extends Application {
     public void startOne() {
         gc.setStroke(Paint.valueOf("black"));
         gc.strokeLine(SIZE_WIDTH - 100, 0, SIZE_WIDTH - 100, 500);
-
         game = new Thread(() -> {
             while (!lost) {
+                gc.setFill(Paint.valueOf("black"));
+                gc.fillText("SCORES :  " + goal, SIZE_WIDTH - 95, 100);
+                gc.setFill(Paint.valueOf("red"));
+                gc.fillText("LEVEL :  " + thisLevel, SIZE_WIDTH - 95, 150);
                 convFigureToPixel();
                 try {
                     Thread.sleep(allLevel[thisLevel]);
@@ -81,8 +84,7 @@ public class Tetris extends Application {
                         addToField();
                         removeLine();
                         removeSpace();
-                        gc.setFill(Paint.valueOf("black"));
-                        gc.fillText("SCORES :  " + goal, SIZE_WIDTH - 95, 100);
+
                         nextFigure = Figure.randomFigure();
                         oneFigure = nextFigure;
                     }
@@ -219,7 +221,6 @@ public class Tetris extends Application {
         }
         goal += 10;
         gc.clearRect(SIZE_WIDTH - 95, 0, SIZE_WIDTH - 95, 500);
-        gc.setStroke(Paint.valueOf("black"));
 
     }
 
