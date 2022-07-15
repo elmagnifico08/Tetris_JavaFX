@@ -18,7 +18,7 @@ public class Tetris extends Application {
     public Figure nextFigure = Figure.randomFigure();
     int rowPixel;
     int colPixel;
-    int[] allLevel = new int[]{700, 500, 275, 180};
+    long[] allLevel = new long[]{700, 500, 275, 180};
     int thisLevel = 0;
     int[] pixelsRowLine = new int[20];
     int[] pixelsColLine = new int[10];
@@ -238,6 +238,7 @@ public class Tetris extends Application {
                 if (field[j][i] != null) {
                     if (field[j][Math.max(i, 1) - 1] == null && field[j][Math.min(8, j) + 1] == null) {
                         if(field[Math.min(j,19)+1][i] == null) {
+                            assert field[j][i] != null;
                             field[j][i].drop();
                         }
                     }
