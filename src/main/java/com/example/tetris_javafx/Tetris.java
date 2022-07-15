@@ -82,8 +82,8 @@ public class Tetris extends Application {
                         draw();
                     } else {
                         addToField();
-
                         removeLine();
+                        removeSpace();
                         nextFigure = Figure.randomFigure();
                         oneFigure = nextFigure;
                     }
@@ -168,6 +168,7 @@ public class Tetris extends Application {
                         int colL = a.getCol();
                         convFieldToPixel();
                         gc.clearRect(pixelsColLine[colL], pixelsRowLine[rowL], rectSize, rectSize);
+
                     }
                     field[i] = new Block[10];
                     for (int j = i; j > 0; j--) {
@@ -222,6 +223,21 @@ public class Tetris extends Application {
         gc.setStroke(Paint.valueOf("black"));
 
     }
+
+    void removeSpace() {
+        for (int i = 0; i < COL; i++) {
+            for (int j = 0; j < ROW; j++) {
+                if (field[j][i] != null) {
+                    if (field[j][Math.max(i, 1) - 1] == null || field[j][Math.min(8, j) + 1] == null) {
+                        if(field[Math.min(j,19)+1][i] == null) {
+                            field[j][i].drop();
+                        }
+                    }
+                } break;
+            }
+        }
+    }
+
 
     private boolean canDrop() {
         Block[] blocks = oneFigure.blocks;

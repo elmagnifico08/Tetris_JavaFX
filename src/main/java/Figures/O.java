@@ -4,7 +4,7 @@ import com.example.tetris_javafx.Block;
 import com.example.tetris_javafx.Figure;
 
 public class O extends Figure {
-    String color = "grey";
+    String color = "silver";
     public O() {
         blocks[0] = new Block(0, 4);
         blocks[1] = new Block(0, 5);
