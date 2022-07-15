@@ -47,6 +47,7 @@ public class Tetris extends Application {
         gc = canvas.getGraphicsContext2D();
         canvas.setFocusTraversable(true);
         root.getChildren().add(canvas);
+
         canvas.setOnKeyPressed(e -> {
             KeyCode key = e.getCode();
             if (key.equals(KeyCode.UP)) getChangeAction();
@@ -67,32 +68,32 @@ public class Tetris extends Application {
         launch();
     }
     public void startOne() {
-        gc.setStroke(Paint.valueOf("black"));
-        gc.strokeLine(SIZE_WIDTH - 100, 0, SIZE_WIDTH - 100, 500);
-        gc.setFill(Paint.valueOf("black"));
-        gc.fillText("SCORES :  " + goal, SIZE_WIDTH - 95, 100);
-        gc.setFill(Paint.valueOf("red"));
-        gc.fillText("LEVEL :  " + thisLevel, SIZE_WIDTH - 95, 150);
         game = new Thread(() -> {
-            while (!lost) {
-                convFigureToPixel();
-                try {
-                    Thread.sleep(allLevel[thisLevel]);
-                    if (canDrop()) {
-                        oneFigure.moveDrop();
-                        removeSpace();
-                        draw();
-                    } else {
-                        addToField();
-                        removeLine();
-                        nextFigure = Figure.randomFigure();
-                        oneFigure = nextFigure;
+            gc.setStroke(Paint.valueOf("black"));
+            gc.strokeLine(SIZE_WIDTH - 100, 0, SIZE_WIDTH - 100, 500);
+            gc.setFill(Paint.valueOf("black"));
+            gc.fillText("SCORES :  " + goal, SIZE_WIDTH - 95, 100);
+            gc.setFill(Paint.valueOf("red"));
+            gc.fillText("LEVEL :  " + thisLevel, SIZE_WIDTH - 95, 150);
+                while (!lost) {
+                    convFigureToPixel();
+                    try {
+                        Thread.sleep(allLevel[thisLevel]);
+                        if (canDrop()) {
+                            oneFigure.moveDrop();
+                            draw();
+                        } else {
+                            addToField();
+                            removeSpace();
+                            removeLine();
+                            nextFigure = Figure.randomFigure();
+                            oneFigure = nextFigure;
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
-            }
-        });
+            });
         game.start();
     }
 
@@ -148,7 +149,7 @@ public class Tetris extends Application {
             if (field[0][i] != null) {
                 gc.setFill(Paint.valueOf("black"));
                 gc.setFont(new Font("Times New Roman", 20));
-                gc.fillText("GAME OVER" , SIZE_WIDTH/2-50, SIZE_HIGH/2,100);
+                gc.fillText("GAME OVER" , SIZE_WIDTH/2-50, SIZE_HIGH/2,150);
                 lost = true;
                 //System.exit(0);
             }
@@ -237,13 +238,12 @@ public class Tetris extends Application {
                 if (field[j][i] != null) {
                     if (field[j][Math.max(i, 1) - 1] == null && field[j][Math.min(8, j) + 1] == null) {
                         if(field[Math.min(j,19)+1][i] == null) {
-                            assert field[j][i] != null;
                             field[j][i].drop();
                         }
                     }
                 } break;
             }
-        }draw();
+        }
     }
     private boolean canDrop() {
         Block[] blocks = oneFigure.blocks;
