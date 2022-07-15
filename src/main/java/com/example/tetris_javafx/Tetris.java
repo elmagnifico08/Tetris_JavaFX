@@ -17,8 +17,8 @@ public class Tetris extends Application {
     public Figure nextFigure = Figure.randomFigure();
     int rowPixel;
     int colPixel;
-    int[] allLevel = new int[]{800, 600, 400, 200};
-    int thisLevel = 1;
+    int[] allLevel = new int[]{700, 500, 275, 180};
+    int thisLevel = 0;
     int[] pixelsRowLine = new int[20];
     int[] pixelsColLine = new int[10];
     int[] pixelsRow = new int[4];
@@ -46,7 +46,6 @@ public class Tetris extends Application {
         gc = canvas.getGraphicsContext2D();
         canvas.setFocusTraversable(true);
         root.getChildren().add(canvas);
-        startOne();
         canvas.setOnKeyPressed(e -> {
             KeyCode key = e.getCode();
             if (key.equals(KeyCode.UP)) getChangeAction();
@@ -56,24 +55,22 @@ public class Tetris extends Application {
         });
         primaryStage.setResizable(false);
         Scene scene = new Scene(root, SIZE_WIDTH, SIZE_HIGH, Color.SKYBLUE);
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("I am T_E_T_R_I_S");
         primaryStage.setScene(scene);
         primaryStage.show();
-
+        startOne();
     }
 
 
     public static void main(String[] args) {
         launch();
     }
-
     public void startOne() {
         gc.setStroke(Paint.valueOf("black"));
         gc.strokeLine(SIZE_WIDTH - 100, 0, SIZE_WIDTH - 100, 500);
+
         game = new Thread(() -> {
             while (!lost) {
-                gc.setFill(Paint.valueOf("black"));
-                gc.fillText("SCORES :  " + goal, SIZE_WIDTH - 95, 100);
                 convFigureToPixel();
                 try {
                     Thread.sleep(allLevel[thisLevel]);
@@ -84,6 +81,8 @@ public class Tetris extends Application {
                         addToField();
                         removeLine();
                         removeSpace();
+                        gc.setFill(Paint.valueOf("black"));
+                        gc.fillText("SCORES :  " + goal, SIZE_WIDTH - 95, 100);
                         nextFigure = Figure.randomFigure();
                         oneFigure = nextFigure;
                     }
@@ -209,17 +208,17 @@ public class Tetris extends Application {
     }
 
     void addScore() {
-        if (goal == 100) {
+        if (goal == 90) {
             thisLevel = 1;
         }
-        if (goal == 250) {
+        if (goal ==190 ) {
             thisLevel = 2;
         }
-        if (goal == 500) {
+        if (goal == 290) {
             thisLevel = 3;
         }
         goal += 10;
-        gc.clearRect(SIZE_WIDTH - 90, 0, SIZE_WIDTH - 90, 500);
+        gc.clearRect(SIZE_WIDTH - 95, 0, SIZE_WIDTH - 95, 500);
         gc.setStroke(Paint.valueOf("black"));
 
     }
