@@ -79,12 +79,11 @@ public class Tetris extends Application {
                     Thread.sleep(allLevel[thisLevel]);
                     if (canDrop()) {
                         oneFigure.moveDrop();
+                        removeSpace();
                         draw();
                     } else {
                         addToField();
                         removeLine();
-                        removeSpace();
-
                         nextFigure = Figure.randomFigure();
                         oneFigure = nextFigure;
                     }
@@ -230,6 +229,7 @@ public class Tetris extends Application {
                 if (field[j][i] != null) {
                     if (field[j][Math.max(i, 1) - 1] == null || field[j][Math.min(8, j) + 1] == null) {
                         if(field[Math.min(j,19)+1][i] == null) {
+                            assert field[j][i] != null;
                             field[j][i].drop();
                         }
                     }
@@ -237,8 +237,6 @@ public class Tetris extends Application {
             }
         }draw();
     }
-
-
     private boolean canDrop() {
         Block[] blocks = oneFigure.blocks;
         for (Block c : blocks) {
