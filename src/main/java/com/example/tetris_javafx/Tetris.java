@@ -13,26 +13,25 @@ import javafx.stage.Stage;
 
 
 public class Tetris extends Application {
-
+    final int ROW = 20;
+    final int COL = 10;
+    final int rectSize = 25;
+    final int SIZE_HIGH = ROW * rectSize;
+    final int SIZE_WIDTH = COL * rectSize + 100;
+    int[] xFigure = new int[SIZE_WIDTH];
+    int[] yFigure = new int[SIZE_HIGH];
+    int[] pixelsRowLine = new int[SIZE_WIDTH];
+    int[] pixelsColLine = new int[SIZE_HIGH];
+    int[] pixelsRow = new int[4];
+    int[] pixelsCol = new int[4];
+    long[] allLevel = new long[]{700, 500, 275, 180};
+    Block[][] field = new Block[ROW][COL];
     public Figure oneFigure = Figure.randomFigure();
     public Figure nextFigure = Figure.randomFigure();
     int rowPixel;
     int colPixel;
-    long[] allLevel = new long[]{700, 500, 275, 180};
     int thisLevel = 0;
-    int[] pixelsRowLine = new int[20];
-    int[] pixelsColLine = new int[10];
-    int[] pixelsRow = new int[4];
-    int[] pixelsCol = new int[4];
-    final int ROW = 20;
-    final int COL = 10;
-    int rectSize = 25;
-    final int SIZE_HIGH = ROW * rectSize;
-    final int SIZE_WIDTH = COL * rectSize + 100;
     static int goal = 0;
-    int[] xFigure = new int[SIZE_WIDTH];
-    int[] yFigure = new int[SIZE_HIGH];
-    Block[][] field = new Block[ROW][COL];
     Canvas canvas;
     GraphicsContext gc;
     boolean lost = false;
@@ -47,7 +46,6 @@ public class Tetris extends Application {
         gc = canvas.getGraphicsContext2D();
         canvas.setFocusTraversable(true);
         root.getChildren().add(canvas);
-
         canvas.setOnKeyPressed(e -> {
             KeyCode key = e.getCode();
             if (key.equals(KeyCode.UP)) getChangeAction();
@@ -67,6 +65,7 @@ public class Tetris extends Application {
     public static void main(String[] args) {
         launch();
     }
+
     public void startOne() {
         game = new Thread(() -> {
             gc.setStroke(Paint.valueOf("black"));
@@ -75,30 +74,29 @@ public class Tetris extends Application {
             gc.fillText("SCORES :  " + goal, SIZE_WIDTH - 95, 100);
             gc.setFill(Paint.valueOf("red"));
             gc.fillText("LEVEL :  " + thisLevel, SIZE_WIDTH - 95, 150);
-                while (!lost) {
-                    convFigureToPixel();
-                    try {
-                        Thread.sleep(allLevel[thisLevel]);
-                        if (canDrop()) {
-                            oneFigure.moveDrop();
-                            draw();
-                        } else {
-                            addToField();
-                            removeSpace();
-                            removeLine();
-                            nextFigure = Figure.randomFigure();
-                            oneFigure = nextFigure;
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+            while (!lost) {
+                convFigureToPixel();
+                try {
+                    game.sleep(allLevel[thisLevel]);
+                    if (canDrop()) {
+                        oneFigure.moveDrop();
+                        draw();
+                    } else {
+                        addFigureToField();
+                        removeLine();
+                        nextFigure = Figure.randomFigure();
+                        oneFigure = nextFigure;
                     }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            });
+            }
+        });
         game.start();
     }
 
     private void draw() {
-        clear();
+        clearField();
         if (!lost) {
             convFigureToPixel();
             gc.setFill(Paint.valueOf(oneFigure.getColor()));
@@ -138,7 +136,7 @@ public class Tetris extends Application {
     }
 
 
-    private void addToField() {
+    private void addFigureToField() {
         Block[] blocks = oneFigure.blocks;
         for (Block c : blocks) {
             int row = c.getRow();
@@ -149,7 +147,7 @@ public class Tetris extends Application {
             if (field[0][i] != null) {
                 gc.setFill(Paint.valueOf("black"));
                 gc.setFont(new Font("Times New Roman", 20));
-                gc.fillText("GAME OVER" , SIZE_WIDTH/2-50, SIZE_HIGH/2,150);
+                gc.fillText("GAME OVER", SIZE_WIDTH / 2 - 50, SIZE_HIGH / 2, 150);
                 lost = true;
                 //System.exit(0);
             }
@@ -157,7 +155,7 @@ public class Tetris extends Application {
     }
 
 
-    void removeLine() {
+    private void removeLine() {
         Block[] blocks = oneFigure.blocks;
         int row = blocks[0].getRow();
         for (Block block : blocks) {
@@ -174,7 +172,6 @@ public class Tetris extends Application {
                         int colL = a.getCol();
                         convFieldToPixel();
                         gc.clearRect(pixelsColLine[colL], pixelsRowLine[rowL], rectSize, rectSize);
-
                     }
                     field[i] = new Block[10];
                     for (int j = i; j > 0; j--) {
@@ -188,13 +185,19 @@ public class Tetris extends Application {
             }
         }
     }
-    void clear() {
+
+    private  void clearField() {
         for (int i = 0; i < 10; i++) {
             convFieldToPixel();
             for (int j = 0; j < 20; j++) {
                 if (field[j][i] == null) {
                     gc.clearRect(pixelsColLine[i], pixelsRowLine[j], rectSize, rectSize);
                 } else if (field[j][i] != null) {
+                    if (field[j][Math.max(i, 1) - 1] == null || field[j][i] == field[j][0] && field[j][Math.min(8, i) + 1] == null ||  field[j][i] == field[j][9]) {
+                        if (field[Math.min(j, 18) + 1][i] == null) {
+                            field[j][i].drop();
+                        }
+                    }
                     gc.setFill(Paint.valueOf("grey"));
                     gc.fillRect(pixelsColLine[i], pixelsRowLine[j], rectSize, rectSize);
                     gc.strokeRect(pixelsColLine[i], pixelsRowLine[j], rectSize - 2, rectSize - 2);
@@ -203,7 +206,7 @@ public class Tetris extends Application {
         }
     }
 
-    boolean isFullLine(Block[] line) {
+    private  boolean isFullLine(Block[] line) {
         for (Block a : line) {
             if (a == null) {
                 return false;
@@ -217,7 +220,7 @@ public class Tetris extends Application {
         if (goal == 90) {
             thisLevel = 1;
         }
-        if (goal ==190 ) {
+        if (goal == 190) {
             thisLevel = 2;
         }
         if (goal == 290) {
@@ -232,20 +235,7 @@ public class Tetris extends Application {
 
     }
 
-    void removeSpace() {
-        for (int i = 0; i < COL; i++) {
-            for (int j = 0; j < ROW; j++) {
-                if (field[j][i] != null) {
-                    if (field[j][Math.max(i, 1) - 1] == null && field[j][Math.min(8, j) + 1] == null) {
-                        if(field[Math.min(j,19)+1][i] == null) {
-                            assert field[j][i] != null;
-                            field[j][i].drop();
-                        }
-                    }
-                } break;
-            }
-        }
-    }
+
     private boolean canDrop() {
         Block[] blocks = oneFigure.blocks;
         for (Block c : blocks) {
@@ -261,7 +251,7 @@ public class Tetris extends Application {
         return true;
     }
 
-    boolean canRight() {
+    private boolean canRight() {
         Block[] blocks = oneFigure.blocks;
         for (Block a : blocks) {
             int row = a.getRow();
@@ -276,7 +266,7 @@ public class Tetris extends Application {
         return true;
     }
 
-    boolean canLeft() {
+    private boolean canLeft() {
         Block[] blocks = oneFigure.blocks;
         for (Block a : blocks) {
             int row = a.getRow();
@@ -291,7 +281,7 @@ public class Tetris extends Application {
         return true;
     }
 
-    boolean canRotate() {
+    private  boolean canRotate() {
         oneFigure.moveChange();
         Block[] states = oneFigure.state;
         for (Block a : states) {
@@ -314,28 +304,28 @@ public class Tetris extends Application {
     }
 
 
-    void getRightAction() {
+    private void getRightAction() {
         if (canRight()) {
             oneFigure.moveRight();
             draw();
         }
     }
 
-    void getLeftAction() {
+    private void getLeftAction() {
         if (canLeft()) {
             oneFigure.moveLeft();
             draw();
         }
     }
 
-    void getDropAction() {
+    private void getDropAction() {
         if (canDrop()) {
             oneFigure.moveDrop();
             draw();
         }
     }
 
-    void getChangeAction() {
+    private  void getChangeAction() {
         if (canRotate()) {
             oneFigure.blocks = oneFigure.state;
             draw();
