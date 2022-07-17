@@ -193,11 +193,6 @@ public class Tetris extends Application {
                 if (field[j][i] == null) {
                     gc.clearRect(pixelsColLine[i], pixelsRowLine[j], rectSize, rectSize);
                 } else if (field[j][i] != null) {
-                    if (field[j][Math.max(i, 1) - 1] == null || field[j][i] == field[j][0] && field[j][Math.min(8, i) + 1] == null ||  field[j][i] == field[j][9]) {
-                        if (field[Math.min(j, 18) + 1][i] == null) {
-                            field[j][i].drop();
-                        }
-                    }
                     gc.setFill(Paint.valueOf("grey"));
                     gc.fillRect(pixelsColLine[i], pixelsRowLine[j], rectSize, rectSize);
                     gc.strokeRect(pixelsColLine[i], pixelsRowLine[j], rectSize - 2, rectSize - 2);
