@@ -22,8 +22,6 @@ public class Tetris extends Application {
     int[] yFigure = new int[SIZE_HIGH];
     int[] pixelsRowLine = new int[SIZE_WIDTH];
     int[] pixelsColLine = new int[SIZE_HIGH];
-    int[] pixelsRow = new int[4];
-    int[] pixelsCol = new int[4];
     long[] allLevel = new long[]{700, 500, 275, 180};
     Block[][] field = new Block[ROW][COL];
     public Figure oneFigure = Figure.randomFigure();
@@ -125,13 +123,9 @@ public class Tetris extends Application {
         for (Block a : blocks) {
             colPixel = convPixel[a.getCol()];
             rowPixel = convPixel[a.getRow()];
-            pixelsCol[i] = colPixel;
-            pixelsRow[i] = rowPixel;
+            xFigure[i] = colPixel;
+            yFigure[i] = rowPixel;
             i++;
-        }
-        for (int j = 0; j < 4; j++) {
-            yFigure[j] = pixelsRow[j];
-            xFigure[j] = pixelsCol[j];
         }
     }
 
