@@ -11,20 +11,21 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-
 public class Tetris extends Application {
+
     final int ROW = 20;
     final int COL = 10;
     final int rectSize = 25;
     final int SIZE_HIGH = ROW * rectSize;
     final int SIZE_WIDTH = COL * rectSize + 100;
-    int[] xFigure = new int[SIZE_WIDTH];
-    int[] yFigure = new int[SIZE_HIGH];
-    int[] pixelsRowLine = new int[SIZE_WIDTH];
-    int[] pixelsColLine = new int[SIZE_HIGH];
+    int[] xFigure = new int[4];
+    int[] yFigure = new int[4];
+    int[] pixelsRowLine = new int[ROW];
+    int[] pixelsColLine = new int[COL];
     long[] allLevel = new long[]{700, 500, 275, 180};
+    int[] convPixel = new int[]{0, 25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500};
     Block[][] field = new Block[ROW][COL];
-    public Figure oneFigure = Figure.randomFigure();
+    public Figure thisFigure = Figure.randomFigure();
     public Figure nextFigure = Figure.randomFigure();
     int rowPixel;
     int colPixel;
@@ -34,8 +35,6 @@ public class Tetris extends Application {
     GraphicsContext gc;
     boolean lost = false;
     Thread game;
-
-    int[] convPixel = new int[]{0, 25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500};
 
     @Override
     public void start(Stage primaryStage) {
@@ -65,6 +64,7 @@ public class Tetris extends Application {
     }
 
     public void startOne() {
+
         game = new Thread(() -> {
             gc.setStroke(Paint.valueOf("black"));
             gc.strokeLine(SIZE_WIDTH - 100, 0, SIZE_WIDTH - 100, 500);
@@ -75,15 +75,15 @@ public class Tetris extends Application {
             while (!lost) {
                 convFigureToPixel();
                 try {
-                    game.sleep(allLevel[thisLevel]);
+                    Thread.sleep(allLevel[thisLevel]);
                     if (canDrop()) {
-                        oneFigure.moveDrop();
+                        thisFigure.moveDrop();
                         draw();
                     } else {
                         addFigureToField();
                         removeLine();
                         nextFigure = Figure.randomFigure();
-                        oneFigure = nextFigure;
+                        thisFigure = nextFigure;
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -97,7 +97,7 @@ public class Tetris extends Application {
         clearField();
         if (!lost) {
             convFigureToPixel();
-            gc.setFill(Paint.valueOf(oneFigure.getColor()));
+            gc.setFill(Paint.valueOf(thisFigure.getColor()));
             for (int i = 0; i < 4; i++) {
                 gc.fillRect(xFigure[i], yFigure[i], rectSize, rectSize);
                 gc.strokeRect(xFigure[i], yFigure[i], rectSize - 2, rectSize - 2);
@@ -106,7 +106,6 @@ public class Tetris extends Application {
 
         }
     }
-
 
     private void convFieldToPixel() {
         for (int i = 0; i < 10; i++) {
@@ -118,7 +117,7 @@ public class Tetris extends Application {
     }
 
     private void convFigureToPixel() {
-        Block[] blocks = oneFigure.blocks;
+        Block[] blocks = thisFigure.blocks;
         int i = 0;
         for (Block a : blocks) {
             colPixel = convPixel[a.getCol()];
@@ -129,9 +128,8 @@ public class Tetris extends Application {
         }
     }
 
-
     private void addFigureToField() {
-        Block[] blocks = oneFigure.blocks;
+        Block[] blocks = thisFigure.blocks;
         for (Block c : blocks) {
             int row = c.getRow();
             int col = c.getCol();
@@ -148,9 +146,8 @@ public class Tetris extends Application {
         }
     }
 
-
     private void removeLine() {
-        Block[] blocks = oneFigure.blocks;
+        Block[] blocks = thisFigure.blocks;
         int row = blocks[0].getRow();
         for (Block block : blocks) {
             if (block.getRow() >= row) {
@@ -180,7 +177,7 @@ public class Tetris extends Application {
         }
     }
 
-    private  void clearField() {
+    private void clearField() {
         for (int i = 0; i < 10; i++) {
             convFieldToPixel();
             for (int j = 0; j < 20; j++) {
@@ -195,13 +192,12 @@ public class Tetris extends Application {
         }
     }
 
-    private  boolean isFullLine(Block[] line) {
+    private boolean isFullLine(Block[] line) {
         for (Block a : line) {
             if (a == null) {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -226,7 +222,7 @@ public class Tetris extends Application {
 
 
     private boolean canDrop() {
-        Block[] blocks = oneFigure.blocks;
+        Block[] blocks = thisFigure.blocks;
         for (Block c : blocks) {
             int row = c.getRow();
             int col = c.getCol();
@@ -241,7 +237,7 @@ public class Tetris extends Application {
     }
 
     private boolean canRight() {
-        Block[] blocks = oneFigure.blocks;
+        Block[] blocks = thisFigure.blocks;
         for (Block a : blocks) {
             int row = a.getRow();
             int col = a.getCol();
@@ -256,7 +252,7 @@ public class Tetris extends Application {
     }
 
     private boolean canLeft() {
-        Block[] blocks = oneFigure.blocks;
+        Block[] blocks = thisFigure.blocks;
         for (Block a : blocks) {
             int row = a.getRow();
             int col = a.getCol();
@@ -270,9 +266,9 @@ public class Tetris extends Application {
         return true;
     }
 
-    private  boolean canRotate() {
-        oneFigure.moveChange();
-        Block[] states = oneFigure.state;
+    private boolean canRotate() {
+        thisFigure.moveChange();
+        Block[] states = thisFigure.state;
         for (Block a : states) {
             int row = a.getRow();
             int col = a.getCol();
@@ -292,31 +288,30 @@ public class Tetris extends Application {
         return true;
     }
 
-
     private void getRightAction() {
         if (canRight()) {
-            oneFigure.moveRight();
+            thisFigure.moveRight();
             draw();
         }
     }
 
     private void getLeftAction() {
         if (canLeft()) {
-            oneFigure.moveLeft();
+            thisFigure.moveLeft();
             draw();
         }
     }
 
     private void getDropAction() {
         if (canDrop()) {
-            oneFigure.moveDrop();
+            thisFigure.moveDrop();
             draw();
         }
     }
 
-    private  void getChangeAction() {
+    private void getChangeAction() {
         if (canRotate()) {
-            oneFigure.blocks = oneFigure.state;
+            thisFigure.blocks = thisFigure.state;
             draw();
         }
     }
