@@ -15,7 +15,6 @@ public class Block {
     public int getCol() {
         return col;
     }
-
     public void right() {
         col++;
     }

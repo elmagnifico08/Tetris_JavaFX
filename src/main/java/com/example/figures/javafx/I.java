@@ -10,8 +10,6 @@ public class I extends Figure {
         blocks[3] = new Block(0, 6);
 
     }
-
-
     @Override
     public Color getColor() {
         return Color.BLUE;

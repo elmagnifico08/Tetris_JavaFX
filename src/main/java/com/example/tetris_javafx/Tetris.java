@@ -13,30 +13,30 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class Tetris extends Application implements RandomFigure{
+import java.util.Arrays;
 
-    final int ROW = 20;
-    final int COL = 10;
-    final int rectSize = 25;
-    final int SIZE_HIGH = ROW * rectSize;
-    final int SIZE_WIDTH = COL * rectSize + 100;
-    int[] xFigure = new int[4];
-    int[] yFigure = new int[4];
-    int[] pixelsRowLine = new int[ROW];
-    int[] pixelsColLine = new int[COL];
-    long[] allLevel = new long[]{700, 500, 275, 180};
-    int[] convPixel = new int[]{0, 25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500};
-    Block[][] field = new Block[ROW][COL];
-    public Figure thisFigure = randomFigure();
-    public Figure nextFigure = randomFigure();
-    int rowPixel;
-    int colPixel;
-    int thisLevel = 0;
+public class Tetris extends Application implements RandomFigure, ConvBlockToPixel {
+    private final int ROW = 20;
+    private final int COL = 10;
+    private final int rectSize = 25;
+    private final int SIZE_HIGH = ROW * rectSize;
+    private final int SIZE_WIDTH = COL * rectSize + 100;
+    private int[] xFigure = new int[4];
+    private int[] yFigure = new int[4];
+    private int[] pixelsRowLine = new int[ROW];
+    private int[] pixelsColLine = new int[COL];
+    private final long[] allLevel = new long[]{700, 500, 275, 180};
+    private final int[] convPixel = convToPixel(ROW, rectSize);
+    private Block[][] field = new Block[ROW][COL];
+    private Figure thisFigure = randomFigure();
+    private Figure nextFigure = randomFigure();
+    private int rowPixel;
+    private int colPixel;
+    private int thisLevel = 0;
     static int goal = 0;
     Canvas canvas;
     GraphicsContext gc;
     boolean lost = false;
-    Paint paint;
 
 
     @Override
@@ -68,7 +68,7 @@ public class Tetris extends Application implements RandomFigure{
 
     public void startOne() {
 
-       Thread game = new Thread(() -> {
+        Thread game = new Thread(() -> {
             gc.setStroke(Paint.valueOf("black"));
             gc.strokeLine(SIZE_WIDTH - 100, 0, SIZE_WIDTH - 100, 500);
             gc.setFill(Paint.valueOf("black"));
@@ -89,7 +89,7 @@ public class Tetris extends Application implements RandomFigure{
                         thisFigure = nextFigure;
                     }
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    System.out.println(e);
                 }
             }
         });
@@ -168,9 +168,7 @@ public class Tetris extends Application implements RandomFigure{
                         gc.clearRect(pixelsColLine[colL], pixelsRowLine[rowL], rectSize, rectSize);
                     }
                     field[i] = new Block[10];
-                    for (int j = i; j > 0; j--) {
-                        field[j] = field[j - 1];
-                    }
+                    System.arraycopy(field, 0, field, 1, i);
                     addScore();
                     field[0] = new Block[10];
                 } else {
@@ -181,9 +179,9 @@ public class Tetris extends Application implements RandomFigure{
     }
 
     private void clearField() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < COL; i++) {
             convFieldToPixel();
-            for (int j = 0; j < 20; j++) {
+            for (int j = 0; j < ROW; j++) {
                 if (field[j][i] == null) {
                     gc.clearRect(pixelsColLine[i], pixelsRowLine[j], rectSize, rectSize);
                 } else if (field[j][i] != null) {
@@ -238,6 +236,7 @@ public class Tetris extends Application implements RandomFigure{
         }
         return true;
     }
+
     private boolean canRight() {
         Block[] blocks = thisFigure.blocks;
         for (Block a : blocks) {
@@ -252,6 +251,7 @@ public class Tetris extends Application implements RandomFigure{
         }
         return true;
     }
+
     private boolean canLeft() {
         Block[] blocks = thisFigure.blocks;
         for (Block a : blocks) {

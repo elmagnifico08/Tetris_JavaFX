@@ -16,6 +16,5 @@ public interface RandomFigure {
             case 6 -> f = new Z();
         }
         return f;
-
     }
 }

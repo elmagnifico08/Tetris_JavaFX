@@ -2,7 +2,6 @@ package com.example.figures.javafx;
 
 import com.example.tetris_javafx.Block;
 
-import java.awt.*;
 
 public class L extends Figure {
     public L() {

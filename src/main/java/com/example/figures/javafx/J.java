@@ -3,8 +3,6 @@ package com.example.figures.javafx;
 import com.example.tetris_javafx.Block;
 import javafx.scene.paint.Color;
 
-import java.awt.*;
-
 public class J extends Figure {
     public J() {
         blocks[0] = new Block(0, 4);
