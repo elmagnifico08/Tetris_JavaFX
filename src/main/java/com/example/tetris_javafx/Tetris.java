@@ -1,7 +1,9 @@
 package com.example.tetris_javafx;
 
-import com.example.figures.javafx.Figure;
-import com.example.figures.javafx.RandomFigure;
+import com.example.figures_javafx.Block;
+import com.example.figures_javafx.Figure;
+import com.example.interface_javafx.ConvBlockToPixel;
+import com.example.interface_javafx.RandomFigure;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -12,8 +14,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
-import java.util.Arrays;
 
 public class Tetris extends Application implements RandomFigure, ConvBlockToPixel {
     private final int ROW = 20;

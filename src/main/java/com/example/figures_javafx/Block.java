@@ -1,4 +1,4 @@
-package com.example.tetris_javafx;
+package com.example.figures_javafx;
 public class Block {
 
     private int row;

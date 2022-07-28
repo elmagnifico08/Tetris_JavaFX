@@ -1,13 +1,16 @@
-package com.example.figures.javafx;
-
-import com.example.tetris_javafx.Block;
+package com.example.figures_javafx;
 
 import java.util.Arrays;
 
 public abstract class Figure {
     int num = 1;
     public Block[] state = new Block[4];
-    public Block[] blocks = new Block[4];
+    public Block[] blocks;
+
+    public Figure(Block[] blocks) {
+        this.blocks = blocks;
+    }
+
     public abstract javafx.scene.paint.Color getColor();
     public abstract void moveChange();
     public void moveLeft() {

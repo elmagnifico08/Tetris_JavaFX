@@ -13,4 +13,8 @@ module com.example.tetris_javafx {
 
     opens com.example.tetris_javafx to javafx.fxml;
     exports com.example.tetris_javafx;
+    exports com.example.figures_javafx;
+    opens com.example.figures_javafx to javafx.fxml;
+    exports com.example.interface_javafx;
+    opens com.example.interface_javafx to javafx.fxml;
 }

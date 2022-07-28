@@ -1,6 +1,6 @@
-package com.example.figures.javafx;
+package com.example.interface_javafx;
 
-import java.util.NoSuchElementException;
+import com.example.figures_javafx.*;
 
 public interface RandomFigure {
     default Figure randomFigure() {
