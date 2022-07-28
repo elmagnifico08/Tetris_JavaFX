@@ -1,21 +1,21 @@
-package Figures;
+package com.example.figures.javafx;
 
 import com.example.tetris_javafx.Block;
-import com.example.tetris_javafx.Figure;
+
+import java.awt.*;
 
 public class T extends Figure {
-    String color = "pink";
-    int num = 1;
 
     public T() {
         blocks[0] = new Block(0, 4);
         blocks[1] = new Block(0, 3);
         blocks[2] = new Block(0, 5);
         blocks[3] = new Block(1, 4);
-
+        Color color = Color.WHITE;
     }
-    public String getColor() {
-        return color;
+    @Override
+    public javafx.scene.paint.Color getColor() {
+        return javafx.scene.paint.Color.HOTPINK;
     }
 
     @Override

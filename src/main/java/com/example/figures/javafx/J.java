@@ -1,21 +1,23 @@
-package Figures;
+package com.example.figures.javafx;
 
 import com.example.tetris_javafx.Block;
-import com.example.tetris_javafx.Figure;
+import javafx.scene.paint.Color;
+
+import java.awt.*;
 
 public class J extends Figure {
-    String color = "purple";
-    int num = 1;
-
     public J() {
         blocks[0] = new Block(0, 4);
         blocks[1] = new Block(0, 3);
         blocks[2] = new Block(0, 5);
         blocks[3] = new Block(1, 5);
     }
-    public String getColor() {
-        return color;
+
+    @Override
+    public javafx.scene.paint.Color getColor() {
+        return Color.DARKGOLDENROD;
     }
+
     @Override
     public void moveChange() {
         state = new Block[4];
@@ -26,7 +28,6 @@ public class J extends Figure {
                 state[1] = new Block(blocks[0].getRow(), blocks[0].getCol() - 1);
                 state[2] = new Block(blocks[0].getRow(), blocks[0].getCol() + 1);
                 state[3] = new Block(blocks[0].getRow() + 1, blocks[0].getCol() + 1);
-
                 break;
             }
             case 2 -> {

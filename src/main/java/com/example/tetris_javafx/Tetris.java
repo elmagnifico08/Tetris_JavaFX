@@ -1,5 +1,7 @@
 package com.example.tetris_javafx;
 
+import com.example.figures.javafx.Figure;
+import com.example.figures.javafx.RandomFigure;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -11,7 +13,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class Tetris extends Application {
+public class Tetris extends Application implements RandomFigure{
 
     final int ROW = 20;
     final int COL = 10;
@@ -25,8 +27,8 @@ public class Tetris extends Application {
     long[] allLevel = new long[]{700, 500, 275, 180};
     int[] convPixel = new int[]{0, 25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500};
     Block[][] field = new Block[ROW][COL];
-    public Figure thisFigure = Figure.randomFigure();
-    public Figure nextFigure = Figure.randomFigure();
+    public Figure thisFigure = randomFigure();
+    public Figure nextFigure = randomFigure();
     int rowPixel;
     int colPixel;
     int thisLevel = 0;
@@ -34,7 +36,8 @@ public class Tetris extends Application {
     Canvas canvas;
     GraphicsContext gc;
     boolean lost = false;
-    Thread game;
+    Paint paint;
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -65,7 +68,7 @@ public class Tetris extends Application {
 
     public void startOne() {
 
-        game = new Thread(() -> {
+       Thread game = new Thread(() -> {
             gc.setStroke(Paint.valueOf("black"));
             gc.strokeLine(SIZE_WIDTH - 100, 0, SIZE_WIDTH - 100, 500);
             gc.setFill(Paint.valueOf("black"));
@@ -82,7 +85,7 @@ public class Tetris extends Application {
                     } else {
                         addFigureToField();
                         removeLine();
-                        nextFigure = Figure.randomFigure();
+                        nextFigure = randomFigure();
                         thisFigure = nextFigure;
                     }
                 } catch (InterruptedException e) {
@@ -97,7 +100,7 @@ public class Tetris extends Application {
         clearField();
         if (!lost) {
             convFigureToPixel();
-            gc.setFill(Paint.valueOf(thisFigure.getColor()));
+            gc.setFill(thisFigure.getColor());
             for (int i = 0; i < 4; i++) {
                 gc.fillRect(xFigure[i], yFigure[i], rectSize, rectSize);
                 gc.strokeRect(xFigure[i], yFigure[i], rectSize - 2, rectSize - 2);
@@ -235,7 +238,6 @@ public class Tetris extends Application {
         }
         return true;
     }
-
     private boolean canRight() {
         Block[] blocks = thisFigure.blocks;
         for (Block a : blocks) {
@@ -250,7 +252,6 @@ public class Tetris extends Application {
         }
         return true;
     }
-
     private boolean canLeft() {
         Block[] blocks = thisFigure.blocks;
         for (Block a : blocks) {

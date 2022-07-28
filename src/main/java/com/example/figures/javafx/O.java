@@ -1,10 +1,10 @@
-package Figures;
+package com.example.figures.javafx;
 
 import com.example.tetris_javafx.Block;
-import com.example.tetris_javafx.Figure;
+
+import java.awt.*;
 
 public class O extends Figure {
-    String color = "white";
     public O() {
         blocks[0] = new Block(0, 4);
         blocks[1] = new Block(0, 5);
@@ -16,7 +16,8 @@ public class O extends Figure {
         state = blocks;
 
     }
-    public String getColor() {
-        return color;
+    @Override
+    public javafx.scene.paint.Color getColor() {
+        return javafx.scene.paint.Color.WHEAT;
     }
 }

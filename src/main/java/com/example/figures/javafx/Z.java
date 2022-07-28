@@ -1,19 +1,19 @@
-package Figures;
+package com.example.figures.javafx;
 
 import com.example.tetris_javafx.Block;
-import com.example.tetris_javafx.Figure;
+
+import java.awt.*;
 
 public class Z extends Figure {
-    String color = "red";
-    int num = 1;
     public Z() {
         blocks[0] = new Block(1, 4);
         blocks[1] = new Block(0, 3);
         blocks[2] = new Block(0, 4);
         blocks[3] = new Block(1, 5);
     }
-    public String getColor() {
-        return color;
+    @Override
+    public javafx.scene.paint.Color getColor() {
+        return javafx.scene.paint.Color.INDIANRED;
     }
 
     @Override
@@ -39,7 +39,6 @@ public class Z extends Figure {
             }
 
         }
-
         if (num==2)num=0;
 
     }
