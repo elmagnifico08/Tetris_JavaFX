@@ -6,11 +6,7 @@ public class I extends Figure {
 
     public I() {
         super( new Block[]{new Block(0, 4), new Block(0, 3), new Block(0, 5), new Block(0, 6)});
-        //Block[] blocks = new Block[];
-//        blocks[0] = new Block(0, 4);
-//        blocks[1] = new Block(0, 3);
-//        blocks[2] = new Block(0, 5);
-//        blocks[3] = new Block(0, 6);
+
 
     }
 

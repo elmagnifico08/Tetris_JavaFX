@@ -4,10 +4,6 @@ package com.example.figures_javafx;
 public class Z extends Figure {
     public Z() {
         super( new Block[]{new Block(1, 4), new Block(0, 3), new Block(0, 4), new Block(1, 5)});
-//        blocks[0] = new Block(1, 4);
-//        blocks[1] = new Block(0, 3);
-//        blocks[2] = new Block(0, 4);
-//        blocks[3] = new Block(1, 5);
     }
     @Override
     public javafx.scene.paint.Color getColor() {

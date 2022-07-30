@@ -4,10 +4,7 @@ public class NotZ extends Figure {
 
     public NotZ() {
         super( new Block[]{new Block(0, 4), new Block(0, 5), new Block(1, 3), new Block(1, 4)});
-//        blocks[0]= new Block(0, 4);
-//        blocks[1]= new Block(0, 5);
-//        blocks[2] = new Block(1, 3);
-//        blocks[3] = new Block(1,4);
+
     }
     @Override
     public javafx.scene.paint.Color getColor() {

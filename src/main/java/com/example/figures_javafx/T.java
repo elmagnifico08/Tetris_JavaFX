@@ -3,13 +3,10 @@ package com.example.figures_javafx;
 public class T extends Figure {
 
     public T() {
-        super( new Block[]{new Block(0, 4), new Block(0, 3), new Block(0, 5), new Block(1, 4)});
-//        blocks[0] = new Block(0, 4);
-//        blocks[1] = new Block(0, 3);
-//        blocks[2] = new Block(0, 5);
-//        blocks[3] = new Block(1, 4);
+        super(new Block[]{new Block(0, 4), new Block(0, 3), new Block(0, 5), new Block(1, 4)});
 
     }
+
     @Override
     public javafx.scene.paint.Color getColor() {
         return javafx.scene.paint.Color.HOTPINK;

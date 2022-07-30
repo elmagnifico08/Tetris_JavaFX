@@ -11,10 +11,10 @@ public class Block {
     public int getRow() {
         return row;
     }
-
     public int getCol() {
         return col;
     }
+
     public void right() {
         col++;
     }

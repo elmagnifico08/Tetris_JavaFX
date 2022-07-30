@@ -5,10 +5,7 @@ import javafx.scene.paint.Color;
 public class J extends Figure {
     public J() {
         super( new Block[]{new Block(0, 4), new Block(0, 3), new Block(0, 5), new Block(1, 5)});
-//        blocks[0] = new Block(0, 4);
-//        blocks[1] = new Block(0, 3);
-//        blocks[2] = new Block(0, 5);
-//        blocks[3] = new Block(1, 5);
+
     }
 
     @Override
