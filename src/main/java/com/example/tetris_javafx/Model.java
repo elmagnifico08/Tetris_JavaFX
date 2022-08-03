@@ -2,50 +2,60 @@ package com.example.tetris_javafx;
 
 import com.example.figures_javafx.Block;
 import com.example.figures_javafx.Figure;
-import com.example.interface_javafx.ConvBlockToPixel;
 import com.example.interface_javafx.RandomFigure;
 
-
-
-public class Tetris  implements RandomFigure, ConvBlockToPixel {
+public class Model implements RandomFigure {
     private final int ROW = 20;
     private final int COL = 10;
-    private final int rectSize = 25;
     private final long[] LEVELS = new long[]{700, 500, 275, 180};
     private Block[][] field = new Block[ROW][COL];
     private Figure thisFigure = randomFigure();
     private Figure nextFigure = randomFigure();
-    private int rowPixel;
-    private int colPixel;
     private int thisLevel = 0;
-    static int goal = 0;
+    private int goal = 0;
     boolean lost = false;
 
-//    public void startOne() {
-//        Thread game = new Thread(() -> {
-//            while (!lost) {
-//                convFigureToPixel();
-//                try {
-//                    Thread.sleep(LEVELS[thisLevel]);
-//                    if (canDrop()) {
-//                        thisFigure.moveDrop();
-//                        draw();
-//                    } else {
-//                        addFigureToField();
-//                        removeLine();
-//                        nextFigure = randomFigure();
-//                        thisFigure = nextFigure;
-//                    }
-//                } catch (InterruptedException e) {
-//                    System.out.println(e);
-//                }
-//            }
-//        });
-//        game.start();
-//    }
+    public int getROW() {
+        return ROW;
+    }
 
+    public int getCOL() {
+        return COL;
+    }
 
-    private void addFigureToField() {
+    public long[] getLEVELS() {
+        return LEVELS;
+    }
+
+    public Block[][] getField() {
+        return field;
+    }
+
+    public void setThisFigure(Figure thisFigure) {
+        this.thisFigure = thisFigure;
+    }
+
+    public void setNextFigure(Figure nextFigure) {
+        this.nextFigure = nextFigure;
+    }
+
+    public Figure getThisFigure() {
+        return thisFigure;
+    }
+
+    public Figure getNextFigure() {
+        return nextFigure;
+    }
+
+    public int getThisLevel() {
+        return thisLevel;
+    }
+
+    public int getGoal() {
+        return goal;
+    }
+
+    public void addFigureToField() {
         Block[] blocks = thisFigure.blocks;
         for (Block c : blocks) {
             int row = c.getRow();
@@ -54,13 +64,13 @@ public class Tetris  implements RandomFigure, ConvBlockToPixel {
         }
         for (int i = 0; i < COL; i++) {
             if (field[0][i] != null) {
-                lost = true;
+               lost = true;
                 //System.exit(0);
             }
         }
     }
 
-    private void removeLine() {
+    public Block[] removeLine() {
         Block[] blocks = thisFigure.blocks;
         int row = blocks[0].getRow();
         for (Block block : blocks) {
@@ -74,13 +84,16 @@ public class Tetris  implements RandomFigure, ConvBlockToPixel {
                     Block[] line = field[i];
                     field[i] = new Block[COL];
                     System.arraycopy(field, 0, field, 1, i);
-                    addScore();
                     field[0] = new Block[COL];
+                    addScore();
+                    return line;
                 } else {
                     break;
                 }
             }
         }
+        return field[0];
+
     }
 
     private boolean isFullLine(Block[] line) {
@@ -92,13 +105,13 @@ public class Tetris  implements RandomFigure, ConvBlockToPixel {
         return true;
     }
 
-    void addScore() {
-      thisLevel = goal/100;
+    private void addScore() {
+        thisLevel = goal / 100;
         goal += 10;
     }
 
 
-    private boolean canDrop() {
+    public boolean canDrop() {
         Block[] blocks = thisFigure.blocks;
         for (Block c : blocks) {
             int row = c.getRow();
@@ -170,18 +183,21 @@ public class Tetris  implements RandomFigure, ConvBlockToPixel {
             thisFigure.moveRight();
         }
     }
+
     public void getLeftAction() {
         if (canLeft()) {
             thisFigure.moveLeft();
 
         }
     }
+
     public void getDropAction() {
         if (canDrop()) {
             thisFigure.moveDrop();
 
         }
     }
+
     public void getChangeAction() {
         if (canRotate()) {
             thisFigure.blocks = thisFigure.state;
