@@ -65,7 +65,7 @@ public class Model implements RandomFigure {
         for (int i = 0; i < COL; i++) {
             if (field[0][i] != null) {
                lost = true;
-                //System.exit(0);
+                System.exit(0);
             }
         }
     }
