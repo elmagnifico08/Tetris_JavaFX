@@ -59,7 +59,7 @@ public class View implements ConvBlockToPixel {
 
     public void draw(Block[][] field, Figure thisFigure, GraphicsContext gc) {
         clearField(field, gc);
-        if (!model.lost) {
+        if (!model.getLost()) {
             convFigureToPixel(thisFigure);
             gc.setFill(thisFigure.getColor());
             for (int i = 0; i < 4; i++) {
@@ -84,12 +84,14 @@ public class View implements ConvBlockToPixel {
             }
     }
 
-    public void gameOver(GraphicsContext gc, boolean lost) {
+    public boolean gameOver(GraphicsContext gc, boolean lost) {
         if(lost) {
             gc.setFill(Paint.valueOf("black"));
             gc.setFont(new Font("Times New Roman", 20));
-            gc.fillText("GAME OVER", SIZE_WIDTH / 2 - 50, SIZE_HIGH / 2, 150);
+            gc.fillText("GAME OVER" , SIZE_WIDTH/2-50, SIZE_HIGH/2,180);
+            return true;
         }
+        return false;
     }
 
 

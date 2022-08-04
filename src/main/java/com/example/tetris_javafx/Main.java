@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
     Model model = new Model();
     View view = new View();
+    Controller controller = new Controller();
     @Override
     public void start(Stage primaryStage) {
         FlowPane root = new FlowPane();
@@ -16,10 +17,10 @@ public class Main extends Application {
         root.getChildren().add(view.canvas);
         view.canvas.setOnKeyPressed(e -> {
             KeyCode key = e.getCode();
-            if (key.equals(KeyCode.UP)) model.getChangeAction();
-            if (key.equals(KeyCode.DOWN)) model.getDropAction();
-            if (key.equals(KeyCode.LEFT)) model.getLeftAction();
-            if (key.equals(KeyCode.RIGHT)) model.getRightAction();
+            if (key.equals(KeyCode.UP)) controller.getChangeAction(model.getThisFigure(),model.getField());
+            if (key.equals(KeyCode.DOWN)) controller.getDropAction(model.getThisFigure(),model.getField());
+            if (key.equals(KeyCode.LEFT)) controller.getLeftAction(model.getThisFigure(),model.getField());
+            if (key.equals(KeyCode.RIGHT)) controller.getRightAction(model.getThisFigure(),model.getField());
             view.draw(model.getField(), model.getThisFigure(), view.gc);
         });
         primaryStage.setResizable(false);
@@ -34,25 +35,25 @@ public class Main extends Application {
     }
 
     public void startOne() {
+        view.drawStrokeScoreLevel(model.getGoal(), model.getThisLevel(), view.gc);
         Thread game = new Thread(() -> {
-            view.drawStrokeScoreLevel(model.getGoal(), model.getThisLevel(), view.gc);
-            while (!model.lost) {
+            while (!view.gameOver(view.gc, model.getLost())) {
                 view.convFigureToPixel(model.getThisFigure());
                 try {
                     Thread.sleep(model.getLEVELS()[model.getThisLevel()]);
-                    if (model.canDrop()) {
+                    if (controller.canDrop(model.getThisFigure(),model.getField())) {
                         model.getThisFigure().moveDrop();
                         view.draw(model.getField(), model.getThisFigure(), view.gc);
                         System.out.println(model.getThisFigure().blocks[0].getRow());
                     } else {
                         model.addFigureToField();
-                        view.gameOver(view.gc, model.lost);
+                        view.gameOver(view.gc, model.getLost());
                         model.removeLine();
-                        view.draw(model.getField(), model.getThisFigure(), view.gc);
                         view.deleteLine(model.removeLine(), view.gc);
                         view.drawAddScore(model.getGoal(), model.getThisLevel(), view.gc);
                         model.setNextFigure(model.randomFigure());
                         model.setThisFigure(model.getNextFigure());
+                        view.draw(model.getField(), model.getThisFigure(), view.gc);
                     }
                 } catch (InterruptedException e) {
                     System.out.println(e);
