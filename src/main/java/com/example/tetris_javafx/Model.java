@@ -2,11 +2,12 @@ package com.example.tetris_javafx;
 
 import com.example.figures_javafx.Block;
 import com.example.figures_javafx.Figure;
+import com.example.interface_javafx.Constant;
 import com.example.interface_javafx.RandomFigure;
 
-public class Model implements RandomFigure {
-    private final int ROW = 20;
-    private final int COL = 10;
+import java.util.Arrays;
+
+public class Model implements RandomFigure, Constant {
     private final long[] LEVELS = new long[]{700, 500, 275, 180};
     private Block[][] field = new Block[ROW][COL];
     private Figure thisFigure = randomFigure();
@@ -19,6 +20,11 @@ public class Model implements RandomFigure {
         return lost;
     }
 
+    public boolean setLost(boolean lost) {
+        this.lost = lost;
+        return lost;
+    }
+
     public int getROW() {
         return ROW;
     }
@@ -26,6 +32,7 @@ public class Model implements RandomFigure {
     public int getCOL() {
         return COL;
     }
+
 
     public long[] getLEVELS() {
         return LEVELS;
@@ -66,23 +73,14 @@ public class Model implements RandomFigure {
             int col = c.getCol();
             field[row][col] = c;
         }
-        for (int i = 0; i < COL; i++) {
-            if (field[0][i] != null) {
-                return lost = true;
-                //System.exit(0);
-            }
+        if(Arrays.stream(blocks).anyMatch(e-> field[1][e.getCol()] != null)){
+            return lost = true;
         }
-        return false;
+        return lost = false ;
     }
-
     public Block[] removeLine() {
         Block[] blocks = thisFigure.blocks;
-        int row = blocks[0].getRow();
-        for (Block block : blocks) {
-            if (block.getRow() >= row) {
-                row = block.getRow();
-            }
-        }
+        int row = Arrays.stream(blocks).map(Block::getRow).max(Integer::compare).get();
         for (int i = row; i > 0; i--) {
             while (true) {
                 if (isFullLine(field[i])) {
@@ -102,105 +100,12 @@ public class Model implements RandomFigure {
     }
 
     private boolean isFullLine(Block[] line) {
-        for (Block a : line) {
-            if (a == null) {
-                return false;
-            }
-        }
-        return true;
+        return Arrays.stream(line).noneMatch(e -> e == null);
     }
 
     private void addScore() {
         thisLevel = goal / 100;
         goal += 10;
     }
-//
-//
-//    public boolean canDrop() {
-//        Block[] blocks = thisFigure.blocks;
-//        for (Block c : blocks) {
-//            int row = c.getRow();
-//            int col = c.getCol();
-//            if (row == 19) {
-//                return false;
-//            }
-//            if (field[row + 1][col] != null) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-//
-//    private boolean canRight() {
-//        Block[] blocks = thisFigure.blocks;
-//        for (Block a : blocks) {
-//            int row = a.getRow();
-//            int col = a.getCol();
-//            if (col == 9) {
-//                return false;
-//            }
-//            if (field[row][col + 1] != null) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-//
-//    private boolean canLeft() {
-//        Block[] blocks = thisFigure.blocks;
-//        for (Block a : blocks) {
-//            int row = a.getRow();
-//            int col = a.getCol();
-//            if (col == 0) {
-//                return false;
-//            }
-//            if (field[row][col - 1] != null) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-//
-//    private boolean canRotate() {
-//        thisFigure.moveChange();
-//        Block[] states = thisFigure.state;
-//        for (Block a : states) {
-//            int row = a.getRow();
-//            int col = a.getCol();
-//            if (a.getCol() > 9 || a.getCol() < 0 || a.getRow() < 0) {
-//                return false;
-//            }
-//            if (field[row][col] != null) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-//
-//    public void getRightAction() {
-//        if (canRight()) {
-//            thisFigure.moveRight();
-//        }
-//    }
-//
-//    public void getLeftAction() {
-//        if (canLeft()) {
-//            thisFigure.moveLeft();
-//
-//        }
-//    }
-//
-//    public void getDropAction() {
-//        if (canDrop()) {
-//            thisFigure.moveDrop();
-//
-//        }
-//    }
-//
-//    public void getChangeAction() {
-//        if (canRotate()) {
-//            thisFigure.blocks = thisFigure.state;
-//        }
-//    }
 
 }
