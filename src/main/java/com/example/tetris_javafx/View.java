@@ -18,15 +18,9 @@ public class View implements ConvBlockToPixel, Constant {
     Canvas canvas = new Canvas(SIZE_WIDTH, SIZE_HIGH);
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
-    public int getSIZE_HIGH() {
-        return SIZE_HIGH;
-    }
-
-    public int getSIZE_WIDTH() {
-        return SIZE_WIDTH;
-    }
-
     public void drawStrokeScoreLevel(int goal, int thisLevel, GraphicsContext gc) {
+        gc.setFont(new Font("Times New Roman", 14));
+        gc.clearRect(SIZE_WIDTH - 95, 0, SIZE_WIDTH - 95, SIZE_HIGH);
         gc.setStroke(Paint.valueOf("black"));
         gc.strokeLine(SIZE_WIDTH - 100, 0, SIZE_WIDTH - 100, SIZE_HIGH);
         gc.setFill(Paint.valueOf("black"));
@@ -53,7 +47,6 @@ public class View implements ConvBlockToPixel, Constant {
             }
         }
     }
-
     public void draw(Block[][] field, Figure thisFigure, GraphicsContext gc,boolean lost) {
         clearField(field, gc);
         if (!lost) {
@@ -63,9 +56,10 @@ public class View implements ConvBlockToPixel, Constant {
                 gc.fillRect(xFigure[i], yFigure[i], RECT_SIZE, RECT_SIZE);
                 gc.strokeRect(xFigure[i], yFigure[i], RECT_SIZE - 2, RECT_SIZE - 2);
             }
+        }else{
+            gameOver(gc);
         }
     }
-
     public void deleteLine(Block[] field, GraphicsContext gc) {
         Block[] line = field;
         for (Block a : line)
@@ -80,19 +74,14 @@ public class View implements ConvBlockToPixel, Constant {
                 }
             }
     }
-
-    public void gameOver(GraphicsContext gc, boolean lost) {
-        if(lost) {
-            gc.fillText("GAME OVER", SIZE_WIDTH / 2 - 50, SIZE_HIGH / 2, 180);
-            gc.setFill(Paint.valueOf("black"));
-            gc.setFont(new Font("Times New Roman", 20));
-        }
+    private void gameOver(GraphicsContext gc) {
+        gc.setFont(new Font("Times New Roman", 35));
+        gc.setFill(Paint.valueOf("black"));
+        gc.fillText("GAME OVER", SIZE_WIDTH / 2 - 50, SIZE_HIGH / 2, 200);
     }
-
-
     private void clearField(Block[][] field, GraphicsContext gc) {
+        convFieldToPixel();
         for (int i = 0; i < COL; i++) {
-            convFieldToPixel();
             for (int j = 0; j < ROW; j++) {
                 if (field[j][i] == null) {
                     gc.clearRect(pixelsColLine[i], pixelsRowLine[j], RECT_SIZE, RECT_SIZE);
@@ -105,12 +94,4 @@ public class View implements ConvBlockToPixel, Constant {
         }
     }
 
-    public void drawAddScore(int goal, int thisLevel, GraphicsContext gc) {
-        gc.clearRect(SIZE_WIDTH - 95, 0, SIZE_WIDTH - 95, SIZE_HIGH);
-        gc.setFill(Paint.valueOf("black"));
-        gc.fillText("SCORES :  " + goal, SIZE_WIDTH - 95, 100);
-        gc.setFill(Paint.valueOf("red"));
-        gc.fillText("LEVEL :  " + thisLevel, SIZE_WIDTH - 95, 150);
-
-    }
 }

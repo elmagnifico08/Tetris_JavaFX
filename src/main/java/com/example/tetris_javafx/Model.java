@@ -1,12 +1,9 @@
 package com.example.tetris_javafx;
-
 import com.example.figures_javafx.Block;
 import com.example.figures_javafx.Figure;
 import com.example.interface_javafx.Constant;
 import com.example.interface_javafx.RandomFigure;
-
 import java.util.Arrays;
-
 public class Model implements RandomFigure, Constant {
     private final long[] LEVELS = new long[]{700, 500, 275, 180};
     private Block[][] field = new Block[ROW][COL];
@@ -19,20 +16,6 @@ public class Model implements RandomFigure, Constant {
     public boolean getLost() {
         return lost;
     }
-
-    public boolean setLost(boolean lost) {
-        this.lost = lost;
-        return lost;
-    }
-
-    public int getROW() {
-        return ROW;
-    }
-
-    public int getCOL() {
-        return COL;
-    }
-
 
     public long[] getLEVELS() {
         return LEVELS;
@@ -82,7 +65,6 @@ public class Model implements RandomFigure, Constant {
         Block[] blocks = thisFigure.blocks;
         int row = Arrays.stream(blocks).map(Block::getRow).max(Integer::compare).get();
         for (int i = row; i > 0; i--) {
-            while (true) {
                 if (isFullLine(field[i])) {
                     Block[] line = field[i];
                     field[i] = new Block[COL];
@@ -93,19 +75,15 @@ public class Model implements RandomFigure, Constant {
                 } else {
                     break;
                 }
-            }
         }
         return field[0];
-
     }
-
     private boolean isFullLine(Block[] line) {
         return Arrays.stream(line).noneMatch(e -> e == null);
     }
-
     private void addScore() {
-        thisLevel = goal / 100;
         goal += 10;
+        thisLevel = goal / 100;
     }
 
 }

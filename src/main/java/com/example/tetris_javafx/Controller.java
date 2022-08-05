@@ -6,6 +6,32 @@ import com.example.figures_javafx.Figure;
 import java.util.Arrays;
 
 public class Controller {
+
+    public void getRightAction(Figure figure, Block[][] field) {
+        if (canRight(figure, field)) {
+            figure.moveRight();
+        }
+    }
+
+    public void getLeftAction(Figure figure, Block[][] field) {
+        if (canLeft(figure, field)) {
+            figure.moveLeft();
+
+        }
+    }
+
+    public void getDropAction(Figure figure, Block[][] field) {
+        if (canDrop(figure, field)) {
+            figure.moveDrop();
+
+        }
+    }
+
+    public void getChangeAction(Figure figure, Block[][] field) {
+        if (canRotate(figure, field)) {
+            figure.blocks = figure.state;
+        }
+    }
     public boolean canDrop(Figure figure, Block[][] field) {
         Block[] blocks = figure.blocks;
         return Arrays.stream(blocks).noneMatch(e -> e.getRow() == 19
@@ -33,29 +59,4 @@ public class Controller {
 
     }
 
-    public void getRightAction(Figure figure, Block[][] field) {
-        if (canRight(figure, field)) {
-            figure.moveRight();
-        }
-    }
-
-    public void getLeftAction(Figure figure, Block[][] field) {
-        if (canLeft(figure, field)) {
-            figure.moveLeft();
-
-        }
-    }
-
-    public void getDropAction(Figure figure, Block[][] field) {
-        if (canDrop(figure, field)) {
-            figure.moveDrop();
-
-        }
-    }
-
-    public void getChangeAction(Figure figure, Block[][] field) {
-        if (canRotate(figure, field)) {
-            figure.blocks = figure.state;
-        }
-    }
 }
