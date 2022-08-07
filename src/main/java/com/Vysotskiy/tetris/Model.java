@@ -85,9 +85,9 @@ public class Model implements RandomFigure, Constant {
     private boolean isFullLine(Block[] line) {
         return Arrays.stream(line).noneMatch(Objects::isNull);
     }
-
     private void addScore() {
         goal += 10;
+        if(goal< 310 )
         thisLevel = goal / 100;
     }
 
