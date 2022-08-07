@@ -1,4 +1,4 @@
-package com.example.interface_javafx;
+package com.Vysotskiy.interfaces;
 
 import java.util.stream.IntStream;
 public interface ConvBlockToPixel {

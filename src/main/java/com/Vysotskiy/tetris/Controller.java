@@ -1,7 +1,7 @@
-package com.example.tetris_javafx;
+package com.Vysotskiy.tetris;
 
-import com.example.figures_javafx.Block;
-import com.example.figures_javafx.Figure;
+import com.Vysotskiy.figures.Block;
+import com.Vysotskiy.figures.Figure;
 
 import java.util.Arrays;
 

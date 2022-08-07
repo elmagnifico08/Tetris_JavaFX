@@ -1,4 +1,4 @@
-package com.example.figures_javafx;
+package com.Vysotskiy.figures;
 
 import javafx.scene.paint.Color;
 
@@ -7,7 +7,6 @@ public class J extends Figure {
         super( new Block[]{new Block(0, 4), new Block(0, 3), new Block(0, 5), new Block(1, 5)});
 
     }
-
     @Override
     public javafx.scene.paint.Color getColor() {
         return Color.DARKGOLDENROD;

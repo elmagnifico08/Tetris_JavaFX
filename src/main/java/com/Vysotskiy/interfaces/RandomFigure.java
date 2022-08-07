@@ -1,11 +1,11 @@
-package com.example.interface_javafx;
+package com.Vysotskiy.interfaces;
 
-import com.example.figures_javafx.*;
+import com.Vysotskiy.figures.*;
 
 public interface RandomFigure {
     default Figure randomFigure() {
-        Figure f = new T();
         int num = (int) (Math.random() * 7);
+        Figure f = new T();
         switch (num) {
             case 0 -> f = new T();
             case 1 -> f = new I();

@@ -1,4 +1,4 @@
-package com.example.figures_javafx;
+package com.Vysotskiy.figures;
 
 
 public class L extends Figure {

@@ -11,10 +11,10 @@ module com.example.tetris_javafx {
     requires eu.hansolo.tilesfx;
     requires java.desktop;
 
-    opens com.example.tetris_javafx to javafx.fxml;
-    exports com.example.tetris_javafx;
-    exports com.example.figures_javafx;
-    opens com.example.figures_javafx to javafx.fxml;
-    exports com.example.interface_javafx;
-    opens com.example.interface_javafx to javafx.fxml;
+    opens com.Vysotskiy.tetris to javafx.fxml;
+    exports com.Vysotskiy.tetris;
+    exports com.Vysotskiy.figures;
+    opens com.Vysotskiy.figures to javafx.fxml;
+    exports com.Vysotskiy.interfaces;
+    opens com.Vysotskiy.interfaces to javafx.fxml;
 }

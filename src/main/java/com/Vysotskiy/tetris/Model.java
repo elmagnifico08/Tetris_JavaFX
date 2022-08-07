@@ -1,9 +1,13 @@
-package com.example.tetris_javafx;
-import com.example.figures_javafx.Block;
-import com.example.figures_javafx.Figure;
-import com.example.interface_javafx.Constant;
-import com.example.interface_javafx.RandomFigure;
+package com.Vysotskiy.tetris;
+
+import com.Vysotskiy.figures.Block;
+import com.Vysotskiy.figures.Figure;
+import com.Vysotskiy.interfaces.Constant;
+import com.Vysotskiy.interfaces.RandomFigure;
+
 import java.util.Arrays;
+import java.util.Objects;
+
 public class Model implements RandomFigure, Constant {
     private final long[] LEVELS = new long[]{700, 500, 275, 180};
     private Block[][] field = new Block[ROW][COL];
@@ -49,38 +53,39 @@ public class Model implements RandomFigure, Constant {
         return goal;
     }
 
-    public boolean addFigureToField() {
+    public void addFigureToField() {
         Block[] blocks = thisFigure.blocks;
         for (Block c : blocks) {
             int row = c.getRow();
             int col = c.getCol();
             field[row][col] = c;
         }
-        if(Arrays.stream(blocks).anyMatch(e-> field[1][e.getCol()] != null)){
-            return lost = true;
+        if (Arrays.stream(blocks).anyMatch(e -> field[1][e.getCol()] != null)) {
+            lost = true;
         }
-        return lost = false ;
     }
-    public Block[] removeLine() {
+
+    public void removeLine() {
         Block[] blocks = thisFigure.blocks;
         int row = Arrays.stream(blocks).map(Block::getRow).max(Integer::compare).get();
         for (int i = row; i > 0; i--) {
+            while (true) {
                 if (isFullLine(field[i])) {
-                    Block[] line = field[i];
                     field[i] = new Block[COL];
                     System.arraycopy(field, 0, field, 1, i);
                     field[0] = new Block[COL];
                     addScore();
-                    return line;
                 } else {
                     break;
                 }
+            }
         }
-        return field[0];
     }
+
     private boolean isFullLine(Block[] line) {
-        return Arrays.stream(line).noneMatch(e -> e == null);
+        return Arrays.stream(line).noneMatch(Objects::isNull);
     }
+
     private void addScore() {
         goal += 10;
         thisLevel = goal / 100;

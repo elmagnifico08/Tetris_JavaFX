@@ -1,9 +1,9 @@
-package com.example.tetris_javafx;
+package com.Vysotskiy.tetris;
 
-import com.example.figures_javafx.Block;
-import com.example.figures_javafx.Figure;
-import com.example.interface_javafx.Constant;
-import com.example.interface_javafx.ConvBlockToPixel;
+import com.Vysotskiy.figures.Block;
+import com.Vysotskiy.figures.Figure;
+import com.Vysotskiy.interfaces.Constant;
+import com.Vysotskiy.interfaces.ConvBlockToPixel;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
@@ -47,7 +47,8 @@ public class View implements ConvBlockToPixel, Constant {
             }
         }
     }
-    public void draw(Block[][] field, Figure thisFigure, GraphicsContext gc,boolean lost) {
+
+    public void draw(Block[][] field, Figure thisFigure, GraphicsContext gc, boolean lost) {
         clearField(field, gc);
         if (!lost) {
             convFigureToPixel(thisFigure);
@@ -56,29 +57,17 @@ public class View implements ConvBlockToPixel, Constant {
                 gc.fillRect(xFigure[i], yFigure[i], RECT_SIZE, RECT_SIZE);
                 gc.strokeRect(xFigure[i], yFigure[i], RECT_SIZE - 2, RECT_SIZE - 2);
             }
-        }else{
+        } else {
             gameOver(gc);
         }
     }
-    public void deleteLine(Block[] field, GraphicsContext gc) {
-        Block[] line = field;
-        for (Block a : line)
-            if (a == null) {
-                break;
-            } else {
-                for (Block b : line) {
-                    int rowL = b.getRow();
-                    int colL = b.getCol();
-                    convFieldToPixel();
-                    gc.clearRect(pixelsColLine[colL], pixelsRowLine[rowL], RECT_SIZE, RECT_SIZE);
-                }
-            }
-    }
+
     private void gameOver(GraphicsContext gc) {
         gc.setFont(new Font("Times New Roman", 35));
         gc.setFill(Paint.valueOf("black"));
         gc.fillText("GAME OVER", SIZE_WIDTH / 2 - 50, SIZE_HIGH / 2, 200);
     }
+
     private void clearField(Block[][] field, GraphicsContext gc) {
         convFieldToPixel();
         for (int i = 0; i < COL; i++) {

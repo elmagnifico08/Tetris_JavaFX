@@ -1,4 +1,4 @@
-package com.example.interface_javafx;
+package com.Vysotskiy.interfaces;
 
 public interface Constant {
     int RECT_SIZE = 30;
