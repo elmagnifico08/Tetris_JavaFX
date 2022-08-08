@@ -1,6 +1,7 @@
 .idea
 Tetris_JavaFX.iml
 META-INF
+target
 target/classes
 module-info
 # Compiled class file
