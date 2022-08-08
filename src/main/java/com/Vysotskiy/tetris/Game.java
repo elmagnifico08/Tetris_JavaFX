@@ -1,7 +1,7 @@
 package com.Vysotskiy.tetris;
 
 public class Game {
-    public void start(Model model,View view,Controller controller) {
+    public void start(Model model, View view, Controller controller) {
         Thread game = new Thread(() -> {
             view.drawStrokeScoreLevel(model.getGoal(), model.getThisLevel(), view.gc);
             while (!model.isLost()) {
