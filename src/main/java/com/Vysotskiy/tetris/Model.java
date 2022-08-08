@@ -4,54 +4,23 @@ import com.Vysotskiy.figures.Block;
 import com.Vysotskiy.figures.Figure;
 import com.Vysotskiy.interfaces.Constant;
 import com.Vysotskiy.interfaces.RandomFigure;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Arrays;
 import java.util.Objects;
-
+@Getter
 public class Model implements RandomFigure, Constant {
     private final long[] LEVELS = new long[]{700, 500, 275, 180};
     private Block[][] field = new Block[ROW][COL];
+    @Setter
     private Figure thisFigure = randomFigure();
+    @Setter
     private Figure nextFigure = randomFigure();
     private int thisLevel = 0;
     private int goal = 0;
     private boolean lost = false;
 
-    public boolean getLost() {
-        return lost;
-    }
-
-    public long[] getLEVELS() {
-        return LEVELS;
-    }
-
-    public Block[][] getField() {
-        return field;
-    }
-
-    public void setThisFigure(Figure thisFigure) {
-        this.thisFigure = thisFigure;
-    }
-
-    public void setNextFigure(Figure nextFigure) {
-        this.nextFigure = nextFigure;
-    }
-
-    public Figure getThisFigure() {
-        return thisFigure;
-    }
-
-    public Figure getNextFigure() {
-        return nextFigure;
-    }
-
-    public int getThisLevel() {
-        return thisLevel;
-    }
-
-    public int getGoal() {
-        return goal;
-    }
 
     public void addFigureToField() {
         Block[] blocks = thisFigure.blocks;

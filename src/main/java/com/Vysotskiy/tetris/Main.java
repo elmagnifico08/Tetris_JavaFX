@@ -24,7 +24,7 @@ public class Main extends Application implements Constant {
             if (key.equals(KeyCode.DOWN)) controller.getDropAction(model.getThisFigure(), model.getField());
             if (key.equals(KeyCode.LEFT)) controller.getLeftAction(model.getThisFigure(), model.getField());
             if (key.equals(KeyCode.RIGHT)) controller.getRightAction(model.getThisFigure(), model.getField());
-            view.draw(model.getField(), model.getThisFigure(), view.gc, model.getLost());
+            view.draw(model.getField(), model.getThisFigure(), view.gc, model.isLost());
         });
         primaryStage.setResizable(false);
         Scene scene = new Scene(root, SIZE_WIDTH, SIZE_HIGH, Color.SKYBLUE);
@@ -41,20 +41,20 @@ public class Main extends Application implements Constant {
     private void start() {
         Thread game = new Thread(() -> {
             view.drawStrokeScoreLevel(model.getGoal(), model.getThisLevel(), view.gc);
-            while (!model.getLost()) {
+            while (!model.isLost()) {
                 view.convFigureToPixel(model.getThisFigure());
                 try {
                     Thread.sleep(model.getLEVELS()[model.getThisLevel()]);
                     if (controller.canDrop(model.getThisFigure(), model.getField())) {
                         model.getThisFigure().moveDrop();
-                        view.draw(model.getField(), model.getThisFigure(), view.gc, model.getLost());
+                        view.draw(model.getField(), model.getThisFigure(), view.gc, model.isLost());
                     } else {
                         model.addFigureToField();
                         model.removeLine();
                         view.drawStrokeScoreLevel(model.getGoal(), model.getThisLevel(), view.gc);
                         model.setNextFigure(model.randomFigure());
                         model.setThisFigure(model.getNextFigure());
-                        view.draw(model.getField(), model.getThisFigure(), view.gc, model.getLost());
+                        view.draw(model.getField(), model.getThisFigure(), view.gc, model.isLost());
                     }
                 } catch (InterruptedException e) {
                     System.out.println(e);
