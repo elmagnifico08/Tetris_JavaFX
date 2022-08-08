@@ -38,7 +38,7 @@ public class Main extends Application implements Constant {
         launch();
     }
 
-    public void start() {
+    private void start() {
         Thread game = new Thread(() -> {
             view.drawStrokeScoreLevel(model.getGoal(), model.getThisLevel(), view.gc);
             while (!model.getLost()) {

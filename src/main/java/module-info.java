@@ -11,6 +11,8 @@ module com.example.tetris_javafx {
     requires eu.hansolo.tilesfx;
     requires java.desktop;
 
+    requires junit;
+
     opens com.Vysotskiy.tetris to javafx.fxml;
     exports com.Vysotskiy.tetris;
     exports com.Vysotskiy.figures;
