@@ -12,6 +12,7 @@ public class Main extends Application implements Constant {
     Model model = new Model();
     View view = new View();
     Controller controller = new Controller();
+    Game game = new Game();
 
     @Override
     public void start(Stage primaryStage) {
@@ -31,38 +32,14 @@ public class Main extends Application implements Constant {
         primaryStage.setTitle("I am T_E_T_R_I_S");
         primaryStage.setScene(scene);
         primaryStage.show();
-        start();
+        game.start(model,view,controller);
     }
 
     public static void main(String[] args) {
         launch();
     }
 
-    private void start() {
-        Thread game = new Thread(() -> {
-            view.drawStrokeScoreLevel(model.getGoal(), model.getThisLevel(), view.gc);
-            while (!model.isLost()) {
-                view.convFigureToPixel(model.getThisFigure());
-                try {
-                    Thread.sleep(model.getLEVELS()[model.getThisLevel()]);
-                    if (controller.canDrop(model.getThisFigure(), model.getField())) {
-                        model.getThisFigure().moveDrop();
-                        view.draw(model.getField(), model.getThisFigure(), view.gc, model.isLost());
-                    } else {
-                        model.addFigureToField();
-                        model.removeLine();
-                        view.drawStrokeScoreLevel(model.getGoal(), model.getThisLevel(), view.gc);
-                        model.setNextFigure(model.randomFigure());
-                        model.setThisFigure(model.getNextFigure());
-                        view.draw(model.getField(), model.getThisFigure(), view.gc, model.isLost());
-                    }
-                } catch (InterruptedException e) {
-                    System.out.println(e);
-                }
-            }
-        });
-        game.start();
-    }
+
 }
 
 
