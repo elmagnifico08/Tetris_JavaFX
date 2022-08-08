@@ -39,15 +39,6 @@ public class View implements ConvBlockToPixel, Constant {
         }
     }
 
-    private void convFieldToPixel() {
-        for (int i = 0; i < COL; i++) {
-            for (int j = 0; j < ROW; j++) {
-                pixelsColLine[i] = convPixel[i];
-                pixelsRowLine[j] = convPixel[j];
-            }
-        }
-    }
-
     public void draw(Block[][] field, Figure thisFigure, GraphicsContext gc, boolean lost) {
         clearField(field, gc);
         if (!lost) {
@@ -59,6 +50,15 @@ public class View implements ConvBlockToPixel, Constant {
             }
         } else {
             gameOver(gc);
+        }
+    }
+
+    private void convFieldToPixel() {
+        for (int i = 0; i < COL; i++) {
+            for (int j = 0; j < ROW; j++) {
+                pixelsColLine[i] = convPixel[i];
+                pixelsRowLine[j] = convPixel[j];
+            }
         }
     }
 
