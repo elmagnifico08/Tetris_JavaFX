@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.util.Arrays;
 import java.util.Objects;
+
 @Getter
 public class Model implements RandomFigure, Constant {
     private final long[] LEVELS = new long[]{700, 500, 275, 180};
@@ -25,9 +26,7 @@ public class Model implements RandomFigure, Constant {
     public void addFigureToField() {
         Block[] blocks = thisFigure.blocks;
         for (Block c : blocks) {
-            int row = c.getRow();
-            int col = c.getCol();
-            field[row][col] = c;
+            field[c.getRow()][c.getCol()] = Arrays.stream(blocks).iterator().next();
         }
         if (Arrays.stream(blocks).anyMatch(e -> field[1][e.getCol()] != null)) {
             lost = true;
@@ -54,10 +53,11 @@ public class Model implements RandomFigure, Constant {
     private boolean isFullLine(Block[] line) {
         return Arrays.stream(line).noneMatch(Objects::isNull);
     }
+
     private void addScore() {
         goal += 10;
-        if(goal< 310 )
-        thisLevel = goal / 100;
+        if (goal < 310)
+            thisLevel = goal / 100;
     }
 
 }

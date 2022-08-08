@@ -20,8 +20,6 @@ public class Z extends Figure {
                 state[1] = new Block(blocks[0].getRow()-1,blocks[0].getCol()-1);
                 state[2] = new Block(blocks[0].getRow()-1,blocks[0].getCol());
                 state[3] = new Block(blocks[0].getRow(),blocks[0].getCol()+1);
-
-                break;
             }
             case 2 -> {
                 state[0] = blocks[0];
@@ -29,7 +27,6 @@ public class Z extends Figure {
                 state[2] = new Block(blocks[0].getRow(),blocks[0].getCol()+1);
                 state[3] = new Block(blocks[0].getRow()+1,blocks[0].getCol());
 
-                break;
             }
 
         }

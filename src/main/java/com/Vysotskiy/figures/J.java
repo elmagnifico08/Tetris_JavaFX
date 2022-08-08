@@ -22,7 +22,7 @@ public class J extends Figure {
                 state[1] = new Block(blocks[0].getRow(), blocks[0].getCol() - 1);
                 state[2] = new Block(blocks[0].getRow(), blocks[0].getCol() + 1);
                 state[3] = new Block(blocks[0].getRow() + 1, blocks[0].getCol() + 1);
-                break;
+
             }
             case 2 -> {
                 state[0] = blocks[0];
@@ -30,21 +30,18 @@ public class J extends Figure {
                 state[2] = new Block(blocks[0].getRow() + 1, blocks[0].getCol());
                 state[3] = new Block(blocks[0].getRow() + 1, blocks[0].getCol() - 1);
 
-                break;
             }
             case 3 -> {
                 state[0] = blocks[0];
                 state[1] = new Block(blocks[0].getRow(), blocks[0].getCol() + 1);
                 state[2] = new Block(blocks[0].getRow(), blocks[0].getCol() - 1);
                 state[3] = new Block(blocks[0].getRow() - 1, blocks[0].getCol() - 1);
-                break;
             }
             case 4 -> {
                 state[0] = blocks[0];
                 state[1] = new Block(blocks[0].getRow() + 1, blocks[0].getCol());
                 state[2] = new Block(blocks[0].getRow() - 1, blocks[0].getCol());
                 state[3] = new Block(blocks[0].getRow() - 1, blocks[0].getCol() + 1);
-                break;
             }
         }
         if (num == 4) num = 0;

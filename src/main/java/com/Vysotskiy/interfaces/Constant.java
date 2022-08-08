@@ -5,5 +5,5 @@ public interface Constant {
     int ROW = 20;
     int COL = 10;
     int SIZE_HIGH = ROW * RECT_SIZE;
-    int SIZE_WIDTH = COL * RECT_SIZE + 100;
+    int SIZE_WIDTH = COL * RECT_SIZE + RECT_SIZE * 4;
 }
