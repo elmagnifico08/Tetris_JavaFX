@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class Controller {
 
-    public void getRightAction(Figure figure, Block[][] field) {
+    public void rightAction(Figure figure, Block[][] field) {
         if (canRight(figure, field)) {
             figure.moveRight();
         }
@@ -15,21 +15,21 @@ public class Controller {
 
 
 
-    public void getLeftAction(Figure figure, Block[][] field) {
+    public void leftAction(Figure figure, Block[][] field) {
         if (canLeft(figure, field)) {
             figure.moveLeft();
 
         }
     }
 
-    public void getDropAction(Figure figure, Block[][] field) {
+    public void dropAction(Figure figure, Block[][] field) {
         if (canDrop(figure, field)) {
             figure.moveDrop();
 
         }
     }
 
-    public void getChangeAction(Figure figure, Block[][] field) {
+    public void changeAction(Figure figure, Block[][] field) {
         if (canRotate(figure, field)) {
             figure.blocks = figure.state;
         }

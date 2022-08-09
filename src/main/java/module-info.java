@@ -9,6 +9,8 @@ module com.example.tetris_javafx {
     requires java.desktop;
     requires junit;
     requires lombok;
+    requires org.junit.jupiter.api;
+
 
     opens com.Vysotskiy.tetris to javafx.fxml;
     exports com.Vysotskiy.tetris;

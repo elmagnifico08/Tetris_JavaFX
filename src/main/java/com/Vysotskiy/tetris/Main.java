@@ -21,10 +21,10 @@ public class Main extends Application implements Constant {
         root.getChildren().add(view.canvas);
         view.canvas.setOnKeyPressed(e -> {
             KeyCode key = e.getCode();
-            if (key.equals(KeyCode.UP)) controller.getChangeAction(model.getThisFigure(), model.getField());
-            if (key.equals(KeyCode.DOWN)) controller.getDropAction(model.getThisFigure(), model.getField());
-            if (key.equals(KeyCode.LEFT)) controller.getLeftAction(model.getThisFigure(), model.getField());
-            if (key.equals(KeyCode.RIGHT)) controller.getRightAction(model.getThisFigure(), model.getField());
+            if (key.equals(KeyCode.UP)) controller.changeAction(model.getThisFigure(), model.getField());
+            if (key.equals(KeyCode.DOWN)) controller.dropAction(model.getThisFigure(), model.getField());
+            if (key.equals(KeyCode.LEFT)) controller.leftAction(model.getThisFigure(), model.getField());
+            if (key.equals(KeyCode.RIGHT)) controller.rightAction(model.getThisFigure(), model.getField());
             view.draw(model.getField(), model.getThisFigure(), view.gc, model.isLost());
         });
         primaryStage.setResizable(false);

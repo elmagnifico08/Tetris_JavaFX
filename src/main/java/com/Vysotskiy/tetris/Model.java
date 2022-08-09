@@ -24,19 +24,16 @@ public class Model implements RandomFigure, Constant {
 
 
     public void addFigureToField() {
-        Block[] blocks = thisFigure.blocks;
-        for (Block c : blocks) {
-            field[c.getRow()][c.getCol()] = Arrays.stream(blocks).iterator().next();
+        for (Block c : thisFigure.blocks) {
+            field[c.getRow()][c.getCol()] = Arrays.stream(thisFigure.blocks).iterator().next();
         }
-        if (Arrays.stream(blocks).anyMatch(e -> field[1][e.getCol()] != null)) {
+        if (Arrays.stream(thisFigure.blocks).anyMatch(e -> field[0][e.getCol()] != null)) {
             lost = true;
         }
     }
 
     public void removeLine() {
-        Block[] blocks = thisFigure.blocks;
-        int row = Arrays.stream(blocks).map(Block::getRow).max(Integer::compare).get();
-        for (int i = row; i > 0; i--) {
+        for (int i = maxRowThisFigure(); i > 0; i--) {
             while (true) {
                 if (isFullLine(field[i])) {
                     field[i] = new Block[COL];
@@ -48,6 +45,10 @@ public class Model implements RandomFigure, Constant {
                 }
             }
         }
+    }
+
+    private int maxRowThisFigure() {
+        return Arrays.stream(thisFigure.blocks).map(Block::getRow).max(Integer::compare).get();
     }
 
     private boolean isFullLine(Block[] line) {
