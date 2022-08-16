@@ -8,7 +8,7 @@ public class Block {
     private int row;
     private int col;
 
-    public Block(int row, int col) {
+    protected Block(int row, int col) {
         this.row = row;
         this.col = col;
     }

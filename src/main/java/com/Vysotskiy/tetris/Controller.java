@@ -13,8 +13,6 @@ public class Controller {
         }
     }
 
-
-
     public void leftAction(Figure figure, Block[][] field) {
         if (canLeft(figure, field)) {
             figure.moveLeft();
@@ -28,35 +26,26 @@ public class Controller {
 
         }
     }
-
     public void changeAction(Figure figure, Block[][] field) {
         if (canRotate(figure, field)) {
-            figure.blocks = figure.state;
+            figure.setBlocks(figure.getState());
         }
     }
     public boolean canDrop(Figure figure, Block[][] field) {
-        Block[] blocks = figure.blocks;
-        return Arrays.stream(blocks).noneMatch(e -> e.getRow() == 19
+        return Arrays.stream(figure.getBlocks()).noneMatch(e -> e.getRow() == 19
                 || field[e.getRow() + 1][e.getCol()] != null);
     }
-
     private boolean canRight(Figure figure, Block[][] field) {
-        Block[] blocks = figure.blocks;
-        return Arrays.stream(blocks).noneMatch(e -> e.getCol() == 9
+        return Arrays.stream(figure.getBlocks()).noneMatch(e -> e.getCol() == 9
                 || field[e.getRow()][e.getCol() + 1] != null);
-
     }
-
     private boolean canLeft(Figure figure, Block[][] field) {
-        Block[] blocks = figure.blocks;
-        return Arrays.stream(blocks).noneMatch(e -> e.getCol() == 0
+        return Arrays.stream(figure.getBlocks()).noneMatch(e -> e.getCol() == 0
                 || field[e.getRow()][e.getCol() - 1] != null);
     }
-
     private boolean canRotate(Figure figure, Block[][] field) {
         figure.moveChange();
-        Block[] states = figure.state;
-        return Arrays.stream(states).noneMatch(e -> e.getCol() > 9 || e.getCol() < 0
+        return Arrays.stream(figure.getState()).noneMatch(e -> e.getCol() > 9 || e.getCol() < 0
                 || e.getRow() < 0 || field[e.getRow()][e.getCol()] != null);
 
     }

@@ -1,15 +1,8 @@
 module com.example.tetris_javafx {
-    requires javafx.controls;
-    requires javafx.fxml;
-    requires javafx.web;
-    requires org.controlsfx.controls;
-    requires com.dlsc.formsfx;
-    requires org.kordamp.ikonli.javafx;
-    requires org.kordamp.bootstrapfx.core;
+
     requires java.desktop;
-    requires junit;
     requires lombok;
-    requires org.junit.jupiter.api;
+    requires javafx.graphics;
 
 
     opens com.Vysotskiy.tetris to javafx.fxml;

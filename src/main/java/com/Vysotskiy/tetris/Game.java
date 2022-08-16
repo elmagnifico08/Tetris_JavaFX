@@ -1,7 +1,16 @@
 package com.Vysotskiy.tetris;
 
+import lombok.Getter;
+
 public class Game {
-    public void start(Model model, View view, Controller controller) {
+    @Getter
+    Model model = new Model();
+    @Getter
+    Controller controller = new Controller();
+    @Getter
+    View view = new View();
+
+    public void start() {
         Thread game = new Thread(() -> {
             view.drawStrokeScoreLevel(model.getGoal(), model.getThisLevel(), view.gc);
             while (!model.isLost()) {
@@ -20,7 +29,7 @@ public class Game {
         game.start();
     }
 
-    private void canMove(Model model,View view) {
+    private void canMove(Model model, View view) {
         model.getThisFigure().moveDrop();
         view.draw(model.getField(), model.getThisFigure(), view.gc, model.isLost());
     }

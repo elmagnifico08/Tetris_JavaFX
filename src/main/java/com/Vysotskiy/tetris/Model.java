@@ -2,7 +2,6 @@ package com.Vysotskiy.tetris;
 
 import com.Vysotskiy.figures.Block;
 import com.Vysotskiy.figures.Figure;
-import com.Vysotskiy.interfaces.Constant;
 import com.Vysotskiy.interfaces.RandomFigure;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +10,9 @@ import java.util.Arrays;
 import java.util.Objects;
 
 @Getter
-public class Model implements RandomFigure, Constant {
+public class Model implements RandomFigure {
+    final private int ROW = 20;
+    final private int COL = 10;
     private final long[] LEVELS = new long[]{700, 500, 275, 180};
     private Block[][] field = new Block[ROW][COL];
     @Setter
@@ -24,10 +25,10 @@ public class Model implements RandomFigure, Constant {
 
 
     public void addFigureToField() {
-        for (Block c : thisFigure.blocks) {
-            field[c.getRow()][c.getCol()] = Arrays.stream(thisFigure.blocks).iterator().next();
+        for (Block c : thisFigure.getBlocks()) {
+            field[c.getRow()][c.getCol()] = Arrays.stream(thisFigure.getBlocks()).iterator().next();
         }
-        if (Arrays.stream(thisFigure.blocks).anyMatch(e -> field[0][e.getCol()] != null)) {
+        if (Arrays.stream(thisFigure.getBlocks()).anyMatch(e -> field[0][e.getCol()] != null)) {
             lost = true;
         }
     }
@@ -48,7 +49,7 @@ public class Model implements RandomFigure, Constant {
     }
 
     private int maxRowThisFigure() {
-        return Arrays.stream(thisFigure.blocks).map(Block::getRow).max(Integer::compare).get();
+        return Arrays.stream(thisFigure.getBlocks()).map(Block::getRow).max(Integer::compare).get();
     }
 
     private boolean isFullLine(Block[] line) {
