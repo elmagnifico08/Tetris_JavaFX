@@ -10,13 +10,13 @@ import javafx.scene.text.Font;
 import lombok.Getter;
 
 public class View implements ConvBlockToPixel {
-    final private int RECT_SIZE = 30;
-    final private int ROW = 20;
-    final private int COL = 10;
+    private final int RECT_SIZE = 30;
+    private final int ROW = 20;
+    private final int COL = 10;
     @Getter
-    final private int SIZE_HIGH = ROW * RECT_SIZE;
+    private final int SIZE_HIGH = ROW * RECT_SIZE;
     @Getter
-    final private int SIZE_WIDTH = COL * RECT_SIZE + RECT_SIZE * 4;
+    private final int SIZE_WIDTH = COL * RECT_SIZE + RECT_SIZE * 4;
     private final int[] pixelsField = convToPixel(ROW, RECT_SIZE);
     Canvas canvas = new Canvas(SIZE_WIDTH, SIZE_HIGH);
     GraphicsContext gc = canvas.getGraphicsContext2D();
