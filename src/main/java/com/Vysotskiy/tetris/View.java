@@ -20,6 +20,8 @@ public class View implements ConvBlockToPixel {
     private final int SIZE_HIGH = ROW * RECT_SIZE;
     @Getter
     private final int SIZE_WIDTH = COL * RECT_SIZE + RECT_SIZE * 4;
+
+
     private final int[] pixelsField = convToPixel(ROW, RECT_SIZE);
     Canvas canvas = new Canvas(SIZE_WIDTH, SIZE_HIGH);
     GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -40,15 +42,20 @@ public class View implements ConvBlockToPixel {
     }
 
 
-    public void drawStrokeScoreLevel(int goal, int thisLevel) {
+    public void drawStrokeScoreLevel(int point, int thisLevel) {
+        int POSITION_STROKE_POINT_WIDTH_AND_LEVEL = SIZE_WIDTH - RECT_SIZE * 4 + 5;
+        int POSITION_STROKE_POINT_HIGH = RECT_SIZE * 3;
+        int POSITION_STROKE_LINE = SIZE_WIDTH - RECT_SIZE * 4;
+        int POSITION_SCORES = SIZE_WIDTH - RECT_SIZE * 3;
+        int POSITION_STROKE_LEVEL_HIGH = RECT_SIZE * 5;
+        gc.clearRect(POSITION_SCORES, 0, POSITION_SCORES, SIZE_HIGH);
         gc.setFont(new Font("Times New Roman", 17));
-        gc.clearRect(SIZE_WIDTH - RECT_SIZE * 3, 0, SIZE_WIDTH - RECT_SIZE * 3, SIZE_HIGH);
         gc.setStroke(Color.BLACK);
-        gc.strokeLine(SIZE_WIDTH - RECT_SIZE * 4, 0, SIZE_WIDTH - RECT_SIZE * 4, SIZE_HIGH);
+        gc.strokeLine(POSITION_STROKE_LINE, 0, POSITION_STROKE_LINE, SIZE_HIGH);
         gc.setFill(Color.BLACK);
-        gc.fillText("SCORES : " + goal, SIZE_WIDTH - RECT_SIZE * 4 + 5, RECT_SIZE * 3);
+        gc.fillText("SCORES : " + point, POSITION_STROKE_POINT_WIDTH_AND_LEVEL, POSITION_STROKE_POINT_HIGH);
         gc.setFill(Color.RED);
-        gc.fillText("LEVEL :  " + thisLevel, SIZE_WIDTH - RECT_SIZE * 4 + 5, RECT_SIZE * 5);
+        gc.fillText("LEVEL :  " + thisLevel, POSITION_STROKE_POINT_WIDTH_AND_LEVEL, POSITION_STROKE_LEVEL_HIGH);
     }
 
     public void draw(Block[][] field, Figure thisFigure, boolean lost) {
@@ -65,9 +72,11 @@ public class View implements ConvBlockToPixel {
     }
 
     private void gameOver() {
+        int POSITION_WIDTH_STROKE_GAME_OVER = SIZE_WIDTH / 2 - 50;
+        int POSITION_HIGH_STROKE_GAME_OVER = SIZE_HIGH / 2;
         gc.setFont(new Font("Times New Roman", 50));
         gc.setFill(Color.BLACK);
-        gc.fillText("GAME OVER", SIZE_WIDTH / 2 - 50, SIZE_HIGH / 2, 200);
+        gc.fillText("GAME OVER", POSITION_WIDTH_STROKE_GAME_OVER, POSITION_HIGH_STROKE_GAME_OVER, 200);
     }
 
     private void clearField(Block[][] field) {
