@@ -16,7 +16,7 @@ public class Model implements RandomFigure {
     private final int MIN_NUM_OF_POINT = 10;
     private final int MAX_POINT_GO_TO_NEXT_LEVEL = 310;
     private final long[] LEVELS = new long[]{700, 500, 275, 180};
-    private Block[][] field = new Block[ROW][COL];
+    private final Block[][] field = new Block[ROW][COL];
     @Setter
     private Figure thisFigure = randomFigure();
     @Setter

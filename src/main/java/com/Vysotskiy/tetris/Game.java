@@ -1,22 +1,18 @@
 package com.Vysotskiy.tetris;
 
-import lombok.Getter;
-
-public class Game {
-    @Getter
-    Controller controller = new Controller();
+public class Game extends Controller {
 
     public void start() {
-        controller.eventHandler();
+        eventHandler();
         Thread game = new Thread(() -> {
-            controller.view.drawStrokeScoreLevel(controller.getModel().getGoal(), controller.getModel().getThisLevel());
-            while (!controller.getModel().isLost()) {
+            view.drawStrokeScoreLevel(model.getGoal(), model.getThisLevel());
+            while (!model.isLost()) {
                 try {
-                    Thread.sleep(controller.getModel().getLEVELS()[controller.getModel().getThisLevel()]);
-                    if (controller.canDrop()) {
-                        canMove(controller.getModel(), controller.view);
+                    Thread.sleep(model.getLEVELS()[model.getThisLevel()]);
+                    if (canDrop()) {
+                        canMove(model, view);
                     } else {
-                        canNotMove(controller.getModel(), controller.view);
+                        canNotMove(model, view);
                     }
                 } catch (InterruptedException e) {
                     System.out.println(e);

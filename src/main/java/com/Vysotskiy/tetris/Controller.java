@@ -1,15 +1,13 @@
 package com.Vysotskiy.tetris;
 
 import javafx.scene.input.KeyCode;
-import lombok.Getter;
 
 import java.util.Arrays;
 
 public class Controller {
-    @Getter
     Model model = new Model();
     View view = new View();
-    public void eventHandler() {
+    protected void eventHandler() {
         view.canvas.setOnKeyPressed(e -> {
             KeyCode key = e.getCode();
             if (key.equals(KeyCode.UP))
@@ -53,7 +51,7 @@ public class Controller {
             model.getThisFigure().setBlocks( model.getThisFigure().getState());
         }
     }
-    public boolean canDrop() {
+    protected boolean canDrop() {
         return Arrays.stream( model.getThisFigure().getBlocks()).noneMatch(e -> e.getRow() == 19
                 || model.getField()[e.getRow() + 1][e.getCol()] != null);
     }

@@ -10,8 +10,7 @@ import javafx.scene.text.Font;
 import lombok.Getter;
 
 public class View implements ConvBlockToPixel {
-    @Getter
-//    Controller controller = new Controller();
+
     private final int RECT_SIZE = 30;
     private final int ROW = 20;
     private final int COL = 10;
@@ -19,27 +18,10 @@ public class View implements ConvBlockToPixel {
     private final int SIZE_HIGH = ROW * RECT_SIZE;
     @Getter
     private final int SIZE_WIDTH = COL * RECT_SIZE + RECT_SIZE * 4;
-
-
     private final int[] pixelsField = convToPixel(ROW, RECT_SIZE);
+
     Canvas canvas = new Canvas(SIZE_WIDTH, SIZE_HIGH);
     GraphicsContext gc = canvas.getGraphicsContext2D();
-
-//    public void eventHandler() {
-//        canvas.setOnKeyPressed(e -> {
-//            KeyCode key = e.getCode();
-//            if (key.equals(KeyCode.UP))
-//                controller.changeAction();
-//            if (key.equals(KeyCode.DOWN))
-//                controller.dropAction();
-//            if (key.equals(KeyCode.LEFT))
-//                controller.leftAction();
-//            if (key.equals(KeyCode.RIGHT))
-//                controller.rightAction();
-//            draw(controller.getModel().getField(), controller.getModel().getThisFigure(), controller.getModel().isLost());
-//        });
-//    }
-
 
     public void drawStrokeScoreLevel(int point, int thisLevel) {
         int POSITION_STROKE_POINT_WIDTH_AND_LEVEL = SIZE_WIDTH - RECT_SIZE * 4 + 5;
