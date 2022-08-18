@@ -9,7 +9,7 @@ public class Game extends Controller {
             while (!model.isLost()) {
                 try {
                     Thread.sleep(model.getLEVELS()[model.getThisLevel()]);
-                    if (canDrop()) {
+                    if (canDrop(model)) {
                         canMove(model, view);
                     } else {
                         canNotMove(model, view);
