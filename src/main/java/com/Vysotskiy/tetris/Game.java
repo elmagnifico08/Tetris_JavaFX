@@ -4,19 +4,19 @@ import lombok.Getter;
 
 public class Game {
     @Getter
-    View view = new View();
+    Controller controller = new Controller();
 
     public void start() {
-        view.eventHandler();
+        controller.eventHandler();
         Thread game = new Thread(() -> {
-            view.drawStrokeScoreLevel(view.getController().getModel().getGoal(), view.getController().getModel().getThisLevel());
-            while (!view.getController().getModel().isLost()) {
+            controller.view.drawStrokeScoreLevel(controller.getModel().getGoal(), controller.getModel().getThisLevel());
+            while (!controller.getModel().isLost()) {
                 try {
-                    Thread.sleep(view.getController().getModel().getLEVELS()[view.getController().getModel().getThisLevel()]);
-                    if (view.getController().canDrop()) {
-                        canMove(view.getController().getModel(), view);
+                    Thread.sleep(controller.getModel().getLEVELS()[controller.getModel().getThisLevel()]);
+                    if (controller.canDrop()) {
+                        canMove(controller.getModel(), controller.view);
                     } else {
-                        canNotMove(view.getController().getModel(), view);
+                        canNotMove(controller.getModel(), controller.view);
                     }
                 } catch (InterruptedException e) {
                     System.out.println(e);

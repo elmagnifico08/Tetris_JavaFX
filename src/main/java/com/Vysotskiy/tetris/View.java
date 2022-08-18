@@ -5,14 +5,13 @@ import com.Vysotskiy.figures.Figure;
 import com.Vysotskiy.interfaces.ConvBlockToPixel;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import lombok.Getter;
 
 public class View implements ConvBlockToPixel {
     @Getter
-    Controller controller = new Controller();
+//    Controller controller = new Controller();
     private final int RECT_SIZE = 30;
     private final int ROW = 20;
     private final int COL = 10;
@@ -26,20 +25,20 @@ public class View implements ConvBlockToPixel {
     Canvas canvas = new Canvas(SIZE_WIDTH, SIZE_HIGH);
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
-    public void eventHandler() {
-        canvas.setOnKeyPressed(e -> {
-            KeyCode key = e.getCode();
-            if (key.equals(KeyCode.UP))
-                controller.changeAction();
-            if (key.equals(KeyCode.DOWN))
-                controller.dropAction();
-            if (key.equals(KeyCode.LEFT))
-                controller.leftAction();
-            if (key.equals(KeyCode.RIGHT))
-                controller.rightAction();
-            draw(controller.getModel().getField(), controller.getModel().getThisFigure(), controller.getModel().isLost());
-        });
-    }
+//    public void eventHandler() {
+//        canvas.setOnKeyPressed(e -> {
+//            KeyCode key = e.getCode();
+//            if (key.equals(KeyCode.UP))
+//                controller.changeAction();
+//            if (key.equals(KeyCode.DOWN))
+//                controller.dropAction();
+//            if (key.equals(KeyCode.LEFT))
+//                controller.leftAction();
+//            if (key.equals(KeyCode.RIGHT))
+//                controller.rightAction();
+//            draw(controller.getModel().getField(), controller.getModel().getThisFigure(), controller.getModel().isLost());
+//        });
+//    }
 
 
     public void drawStrokeScoreLevel(int point, int thisLevel) {

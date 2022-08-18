@@ -12,10 +12,10 @@ public class App extends Application implements ConvBlockToPixel {
     @Override
     public void start(Stage primaryStage) {
         FlowPane root = new FlowPane();
-        game.getView().canvas.setFocusTraversable(true);
-        root.getChildren().add(game.getView().canvas);
+        game.getController().view.canvas.setFocusTraversable(true);
+        root.getChildren().add(game.getController().view.canvas);
         primaryStage.setResizable(false);
-        Scene scene = new Scene(root, game.getView().getSIZE_WIDTH(), game.getView().getSIZE_HIGH(), Color.SKYBLUE);
+        Scene scene = new Scene(root, game.getController().view.getSIZE_WIDTH(), game.getController().view.getSIZE_HIGH(), Color.SKYBLUE);
         primaryStage.setTitle("I am T_E_T_R_I_S");
         primaryStage.setScene(scene);
         primaryStage.show();
