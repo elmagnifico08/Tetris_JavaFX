@@ -1,14 +1,13 @@
 package com.Vysotskiy.tetris;
 
-import com.Vysotskiy.interfaces.ConvBlockToPixel;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class App extends Application implements ConvBlockToPixel {
-    Game game = new Game();
+public class App extends Application  {
+    GameLogic game = new GameLogic();
     @Override
     public void start(Stage primaryStage) {
         FlowPane root = new FlowPane();
@@ -19,7 +18,7 @@ public class App extends Application implements ConvBlockToPixel {
         primaryStage.setTitle("I am T_E_T_R_I_S");
         primaryStage.setScene(scene);
         primaryStage.show();
-        game.start();
+        game.startGame();
     }
 
     public static void main(String[] args) {
