@@ -1,6 +1,6 @@
 package com.Vysotskiy.interfaces;
 
-public interface Modelable {
+public interface Moduler {
     void figureFell();
 
     void figureMoveDrop();

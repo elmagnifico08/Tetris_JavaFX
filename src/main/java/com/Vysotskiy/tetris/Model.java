@@ -1,14 +1,23 @@
 package com.Vysotskiy.tetris;
 
-import com.Vysotskiy.figures.*;
-import com.Vysotskiy.interfaces.Modelable;
-import lombok.Getter;
+import com.Vysotskiy.figures.Block;
+import com.Vysotskiy.figures.Figure;
+import com.Vysotskiy.figures.I;
+import com.Vysotskiy.figures.J;
+import com.Vysotskiy.figures.L;
+import com.Vysotskiy.figures.NotZ;
+import com.Vysotskiy.figures.O;
+import com.Vysotskiy.figures.T;
+import com.Vysotskiy.figures.Z;
+import com.Vysotskiy.interfaces.Moduler;
 
 import java.util.Arrays;
 import java.util.Objects;
 
+import lombok.Getter;
+
 @Getter
-public class Model implements Modelable {
+public class Model implements Moduler {
     final private int ROW = 20;
     final private int COL = 10;
     private final int MIN_NUM_OF_POINT = 10;
