@@ -1,7 +1,6 @@
 package com.Vysotskiy.interfaces;
 
 import com.Vysotskiy.tetris.Model;
-import com.Vysotskiy.tetris.View;
 
 public interface Controllable {
     void changeAction(Model model);
@@ -12,6 +11,5 @@ public interface Controllable {
 
     void rightAction(Model model);
 
-    void eventHandler(Model model, View view);
 
 }

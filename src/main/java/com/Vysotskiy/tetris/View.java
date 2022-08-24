@@ -1,18 +1,21 @@
 package com.Vysotskiy.tetris;
 
 import com.Vysotskiy.figures.Block;
-import com.Vysotskiy.figures.Figure;
+import com.Vysotskiy.interfaces.Controllable;
 import com.Vysotskiy.interfaces.Viewable;
+
+import java.util.stream.IntStream;
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import lombok.Getter;
 
-import java.util.stream.IntStream;
-
 public class View implements Viewable {
-
+    Controllable controller = new Controller();
+    Model model = new Model();
     private final int RECT_SIZE = 30;
     private final int ROW = 20;
     private final int COL = 10;
@@ -25,13 +28,39 @@ public class View implements Viewable {
     Canvas canvas = new Canvas(SIZE_WIDTH, SIZE_HIGH);
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
+@Override
+    public void eventHandler() {
+        canvas.setOnKeyPressed(e -> {
+            KeyCode key = e.getCode();
+            if (key.equals(KeyCode.UP))
+                controller.changeAction(model);
+            if (key.equals(KeyCode.DOWN))
+                controller.dropAction(model);
+            if (key.equals(KeyCode.LEFT))
+                controller.leftAction(model);
+            if (key.equals(KeyCode.RIGHT))
+                controller.rightAction(model);
+            drawField();
+        });
+    }
 
     @Override
-    public void drawField(Block[][] field, Figure thisFigure, boolean lost) {
-        clearField(field);
-        if (!lost) {
-            gc.setFill(thisFigure.getColor());
-            for (Block a : thisFigure.getBlocks()) {
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+    @Override
+    public Model getModel() {
+        return model;
+    }
+
+
+    @Override
+    public void drawField() {
+        clearField(model.getField());
+        if (!model.isLost()) {
+            gc.setFill(model.getThisFigure().getColor());
+            for (Block a : model.getThisFigure().getBlocks()) {
                 gc.fillRect(pixelsField[a.getCol()], pixelsField[a.getRow()], RECT_SIZE, RECT_SIZE);
                 gc.strokeRect(pixelsField[a.getCol()], pixelsField[a.getRow()], RECT_SIZE - 2, RECT_SIZE - 2);
             }
@@ -41,7 +70,7 @@ public class View implements Viewable {
     }
 
     @Override
-    public void drawScoreAndLevel(int point, int thisLevel) {
+    public void drawScoreAndLevel() {
         int POSITION_STROKE_POINT_WIDTH_AND_LEVEL = SIZE_WIDTH - RECT_SIZE * 4 + 5;
         int POSITION_STROKE_POINT_HIGH = RECT_SIZE * 3;
         int POSITION_STROKE_LINE = SIZE_WIDTH - RECT_SIZE * 4;
@@ -52,9 +81,9 @@ public class View implements Viewable {
         gc.setStroke(Color.BLACK);
         gc.strokeLine(POSITION_STROKE_LINE, 0, POSITION_STROKE_LINE, SIZE_HIGH);
         gc.setFill(Color.BLACK);
-        gc.fillText("SCORES : " + point, POSITION_STROKE_POINT_WIDTH_AND_LEVEL, POSITION_STROKE_POINT_HIGH);
+        gc.fillText("SCORES : " + model.getGoal(), POSITION_STROKE_POINT_WIDTH_AND_LEVEL, POSITION_STROKE_POINT_HIGH);
         gc.setFill(Color.RED);
-        gc.fillText("LEVEL :  " + thisLevel, POSITION_STROKE_POINT_WIDTH_AND_LEVEL, POSITION_STROKE_LEVEL_HIGH);
+        gc.fillText("LEVEL :  " + model.getThisLevel(), POSITION_STROKE_POINT_WIDTH_AND_LEVEL, POSITION_STROKE_LEVEL_HIGH);
     }
 
     private void gameOver() {

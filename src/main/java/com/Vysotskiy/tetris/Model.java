@@ -10,6 +10,7 @@ import com.Vysotskiy.figures.O;
 import com.Vysotskiy.figures.T;
 import com.Vysotskiy.figures.Z;
 import com.Vysotskiy.interfaces.Moduler;
+import com.Vysotskiy.interfaces.Viewable;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -18,6 +19,7 @@ import lombok.Getter;
 
 @Getter
 public class Model implements Moduler {
+
     final private int ROW = 20;
     final private int COL = 10;
     private final int MIN_NUM_OF_POINT = 10;
@@ -31,6 +33,36 @@ public class Model implements Moduler {
     private boolean lost = false;
 
 
+
+
+        public void startGame(Viewable view) {
+        Thread game = new Thread(() -> {
+            view.drawScoreAndLevel();
+            while (!isLost()) {
+                try {
+                    Thread.sleep(LEVELS[thisLevel]);
+                    if (figureCanDrop()) {
+                        canMove(view);
+                    } else {
+                        canNotMove(view);
+                    }
+                } catch (InterruptedException e) {
+                    System.out.println("Interrupted exception"+e);
+                }
+            }
+        });
+        game.start();
+    }
+    private void canMove(Viewable view) {
+        figureMoveDrop();
+        view.drawField();
+    }
+
+    private void canNotMove(Viewable view) {
+        figureFell();
+        view.drawScoreAndLevel();
+        view.drawField();
+    }
     @Override
     public void figureFell() {
         addFigureToField();
@@ -49,7 +81,33 @@ public class Model implements Moduler {
                 || field[e.getRow() + 1][e.getCol()] != null);
     }
 
+    public void rightAction() {
+        if (Arrays.stream(thisFigure.getBlocks()).noneMatch(e -> e.getCol() == COL-1
+                || field[e.getRow()][e.getCol() + 1] != null)) {
+            thisFigure.moveRight();
+        }
+    }
+    public void leftAction() {
+        if (Arrays.stream(thisFigure.getBlocks()).noneMatch(e -> e.getCol() == 0
+                || field[e.getRow()][e.getCol() - 1] != null)) {
+            thisFigure.moveLeft();
 
+        }
+    }
+    public void dropAction() {
+        if (Arrays.stream(thisFigure.getBlocks()).noneMatch(e -> e.getRow() == ROW-1
+                || field[e.getRow() + 1][e.getCol()] != null)) {
+            thisFigure.moveDrop();
+
+        }
+    }
+    public void changeAction() {
+        thisFigure.moveChange();
+        if (Arrays.stream(thisFigure.getState()).noneMatch(e -> e.getCol() > 9 || e.getCol() < 0
+                || e.getRow() < 0 || field[e.getRow()][e.getCol()] != null)) {
+            thisFigure.setBlocks(thisFigure.getState());
+        }
+    }
     private void addFigureToField() {
         for (Block c : thisFigure.getBlocks()) {
             field[c.getRow()][c.getCol()] = Arrays.stream(thisFigure.getBlocks()).iterator().next();

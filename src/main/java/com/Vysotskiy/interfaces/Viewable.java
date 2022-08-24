@@ -1,10 +1,22 @@
 package com.Vysotskiy.interfaces;
 
-import com.Vysotskiy.figures.Block;
-import com.Vysotskiy.figures.Figure;
+import com.Vysotskiy.tetris.Model;
+
+import javafx.scene.canvas.Canvas;
 
 public interface Viewable {
-    void drawField(Block[][] field, Figure thisFigure, boolean lost);
+    void drawField();
 
-    void drawScoreAndLevel(int point, int thisLevel);
+    void drawScoreAndLevel();
+
+    void eventHandler();
+
+    Canvas getCanvas();
+
+    int getSIZE_WIDTH();
+
+    int getSIZE_HIGH();
+
+    Model getModel();
+
 }
