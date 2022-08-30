@@ -14,23 +14,23 @@ public class Controller implements ControllingMoveFigure, ControllingField, Tram
     }
 
     @Override
-    public Figure rightAction() {
-        return model.rightAction();
+    public void rightAction() {
+        model.rightAction();
     }
 
     @Override
-    public Figure leftAction() {
-        return model.leftAction();
+    public void leftAction() {
+        model.leftAction();
     }
 
     @Override
-    public Figure dropAction() {
-        return model.dropAction();
+    public void dropAction() {
+        model.dropAction();
     }
 
     @Override
-    public Figure changeAction() {
-        return model.changeAction();
+    public void changeAction() {
+        model.changeAction();
     }
 
 

@@ -16,7 +16,7 @@ import java.util.Objects;
 import javafx.scene.paint.Color;
 
 
-public class Model implements CheckingGameField, ReplaceablePositionFigure,Scoringable {
+public class Model implements MoveGameField, ReplaceablePositionFigure,Scoringable {
     final private int ROW = 20;
     final private int COL = 10;
     private final int MIN_NUM_OF_POINT = 10;

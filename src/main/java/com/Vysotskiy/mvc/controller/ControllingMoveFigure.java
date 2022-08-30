@@ -1,15 +1,13 @@
 package com.Vysotskiy.mvc.controller;
 
-import com.Vysotskiy.figures.Figure;
-
 public interface ControllingMoveFigure {
-    Figure changeAction();
+    void changeAction();
 
-    Figure dropAction();
+    void dropAction();
 
-    Figure leftAction();
+    void leftAction();
 
-    Figure rightAction();
+    void rightAction();
 
 
 }

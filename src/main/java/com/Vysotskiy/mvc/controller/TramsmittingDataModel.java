@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 public interface TramsmittingDataModel {
 
     Color getFigureColor();
+
     Figure getThisFigure();
 
     Block[][] getField();
@@ -19,12 +20,6 @@ public interface TramsmittingDataModel {
     int getGoal();
 
     int getThisLevel();
-
-
-
-
-
-
 
 
 }
