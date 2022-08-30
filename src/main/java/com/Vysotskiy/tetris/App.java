@@ -1,6 +1,8 @@
 package com.Vysotskiy.tetris;
 
-import com.Vysotskiy.interfaces.Viewable;
+import com.Vysotskiy.mvc.controller.Controller;
+import com.Vysotskiy.mvc.model.Model;
+import com.Vysotskiy.mvc.view.View;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -9,7 +11,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class App extends Application {
-    Viewable view = new View();
+    Model model = new Model();
+    Controller controller = new Controller(model);
+    View view = new View(controller);
     @Override
     public void start(Stage primaryStage) {
         FlowPane root = new FlowPane();
@@ -20,8 +24,7 @@ public class App extends Application {
         primaryStage.setTitle("I am T_E_T_R_I_S");
         primaryStage.setScene(scene);
         primaryStage.show();
-        view.eventHandler();
-        view.getModel().startGame(view);
+        view.startGame();
     }
 
     public static void main(String[] args) {

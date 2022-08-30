@@ -8,7 +8,7 @@ module com.example.tetris_javafx {
     opens com.Vysotskiy.tetris to javafx.fxml;
     exports com.Vysotskiy.tetris;
     exports com.Vysotskiy.figures;
-    opens com.Vysotskiy.figures to javafx.fxml;
-    exports com.Vysotskiy.interfaces;
-    opens com.Vysotskiy.interfaces to javafx.fxml;
+    exports com.Vysotskiy.mvc.model;
+
+
 }
