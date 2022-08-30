@@ -5,7 +5,7 @@ import com.Vysotskiy.figures.Figure;
 
 import javafx.scene.paint.Color;
 
-public interface TramsmittingDataModel {
+public interface TramsmittingData {
 
     Color getFigureColor();
 

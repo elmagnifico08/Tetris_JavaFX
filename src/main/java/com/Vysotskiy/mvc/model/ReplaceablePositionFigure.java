@@ -3,7 +3,7 @@ package com.Vysotskiy.mvc.model;
 import com.Vysotskiy.figures.Figure;
 
 
-public interface ReplaceablePositionFigure extends FigureableData {
+public interface ReplaceablePositionFigure  {
 
     Figure rightAction();
 

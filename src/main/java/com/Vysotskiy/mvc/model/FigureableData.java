@@ -4,7 +4,7 @@ import com.Vysotskiy.figures.Figure;
 
 import javafx.scene.paint.Color;
 
-public interface FigureableData {
+public interface FigureableData  {
     Figure getThisFigure();
 
     Color getColor();
