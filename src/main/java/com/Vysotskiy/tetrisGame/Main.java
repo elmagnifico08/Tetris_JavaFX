@@ -1,4 +1,4 @@
-package com.Vysotskiy.tetris;
+package com.Vysotskiy.tetrisGame;
 
 import com.Vysotskiy.mvc.controller.Controller;
 import com.Vysotskiy.mvc.model.Model;
@@ -10,7 +10,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class App extends Application {
+public class Main extends Application {
     Model model = new Model();
     Controller controller = new Controller(model);
     View view = new View(controller);
@@ -24,7 +24,7 @@ public class App extends Application {
         primaryStage.setTitle("I am T_E_T_R_I_S");
         primaryStage.setScene(scene);
         primaryStage.show();
-        view.startGame();
+        view.viewStartGame();
     }
 
     public static void main(String[] args) {

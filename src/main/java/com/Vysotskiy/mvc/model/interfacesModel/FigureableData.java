@@ -1,4 +1,4 @@
-package com.Vysotskiy.mvc.model;
+package com.Vysotskiy.mvc.model.interfacesModel;
 
 import com.Vysotskiy.figures.Figure;
 

@@ -1,6 +1,7 @@
-package com.Vysotskiy.mvc.controller;
+package com.Vysotskiy.mvc.controller.interfacesController;
 
 public interface ControllingMoveFigure {
+
     void changeAction();
 
     void dropAction();

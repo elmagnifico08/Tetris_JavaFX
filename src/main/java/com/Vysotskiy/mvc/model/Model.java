@@ -9,6 +9,10 @@ import com.Vysotskiy.figures.NotZ;
 import com.Vysotskiy.figures.O;
 import com.Vysotskiy.figures.T;
 import com.Vysotskiy.figures.Z;
+import com.Vysotskiy.mvc.model.interfacesModel.FigureableData;
+import com.Vysotskiy.mvc.model.interfacesModel.MoveGameField;
+import com.Vysotskiy.mvc.model.interfacesModel.ReplaceablePositionFigure;
+import com.Vysotskiy.mvc.model.interfacesModel.TransmittedDataModel;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -16,12 +20,12 @@ import java.util.Objects;
 import javafx.scene.paint.Color;
 
 
-public class Model implements MoveGameField, ReplaceablePositionFigure, TransmittedDataModel,FigureableData {
+public class Model implements MoveGameField, ReplaceablePositionFigure, TransmittedDataModel, FigureableData {
     final private int ROW = 20;
     final private int COL = 10;
     private final int MIN_NUM_OF_POINT = 10;
     private final int MAX_POINT_GO_TO_NEXT_LEVEL = 310;
-    private final long[] LEVELS = new long[]{700, 500, 275, 180};
+    private final long[] SPEED_LEVELS = new long[]{700, 500, 275, 180};
     private final Block[][] field = new Block[ROW][COL];
     private Figure thisFigure = randomFigure();
     private Figure nextFigure = randomFigure();
@@ -36,8 +40,8 @@ public class Model implements MoveGameField, ReplaceablePositionFigure, Transmit
     }
 
     @Override
-    public long[] getLEVELS() {
-        return LEVELS;
+    public long[] getSPEED_LEVELS() {
+        return SPEED_LEVELS;
     }
 
     @Override
@@ -71,7 +75,7 @@ public class Model implements MoveGameField, ReplaceablePositionFigure, Transmit
     }
 
     @Override
-    public boolean figureCanDrop() {
+    public boolean checkingFigureCanDrop() {
         return Arrays.stream(thisFigure.getBlocks()).noneMatch(e -> e.getRow()==19
                 || field[e.getRow() + 1][e.getCol()]!=null);
     }
@@ -101,8 +105,7 @@ public class Model implements MoveGameField, ReplaceablePositionFigure, Transmit
 
     @Override
     public Figure dropAction() {
-        if (Arrays.stream(thisFigure.getBlocks()).noneMatch(e -> e.getRow()==ROW - 1
-                || field[e.getRow() + 1][e.getCol()]!=null)) {
+        if (checkingFigureCanDrop()) {
             thisFigure.moveDrop();
         }
         return thisFigure;

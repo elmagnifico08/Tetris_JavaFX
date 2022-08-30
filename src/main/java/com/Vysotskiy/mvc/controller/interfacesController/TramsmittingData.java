@@ -1,4 +1,4 @@
-package com.Vysotskiy.mvc.controller;
+package com.Vysotskiy.mvc.controller.interfacesController;
 
 import com.Vysotskiy.figures.Block;
 import com.Vysotskiy.figures.Figure;

@@ -1,4 +1,4 @@
-package com.Vysotskiy.mvc.model;
+package com.Vysotskiy.mvc.model.interfacesModel;
 
 public interface MoveGameField {
 
@@ -6,7 +6,7 @@ public interface MoveGameField {
 
     void figureMoveDrop();
 
-    boolean figureCanDrop();
+    boolean checkingFigureCanDrop();
 
 
 }

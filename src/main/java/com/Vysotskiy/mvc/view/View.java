@@ -2,6 +2,7 @@ package com.Vysotskiy.mvc.view;
 
 import com.Vysotskiy.figures.Block;
 import com.Vysotskiy.mvc.controller.Controller;
+import com.Vysotskiy.mvc.view.interfacesView.Viewable;
 
 import java.util.stream.IntStream;
 
@@ -14,9 +15,11 @@ import lombok.Getter;
 
 public class View implements Viewable {
     Controller controller;
+
     public View(Controller controller) {
         this.controller = controller;
     }
+
     private final int RECT_SIZE = 30;
     private final int ROW = 20;
     private final int COL = 10;
@@ -29,14 +32,15 @@ public class View implements Viewable {
     Canvas canvas = new Canvas(SIZE_WIDTH, SIZE_HIGH);
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
-    public void startGame() {
-    eventHandler();
+    @Override
+    public void viewStartGame() {
+        eventHandler();
         Thread game = new Thread(() -> {
             drawScoreAndLevel();
             while (!controller.isGameOver()) {
                 try {
                     Thread.sleep(controller.getLEVELS()[controller.getThisLevel()]);
-                    if (controller.possibleFallFigure()) {
+                    if (controller.checkingCanFigureFell()) {
                         canMove();
                     } else {
                         canNotMove();
@@ -53,6 +57,7 @@ public class View implements Viewable {
     public Canvas getCanvas() {
         return canvas;
     }
+
     private void eventHandler() {
         canvas.setOnKeyPressed(e -> {
             KeyCode key = e.getCode();
@@ -78,7 +83,6 @@ public class View implements Viewable {
         drawScoreAndLevel();
         drawField();
     }
-
 
 
     private void drawField() {
@@ -126,9 +130,9 @@ public class View implements Viewable {
     private void clearField(Block[][] field) {
         for (int i = 0; i < COL; i++) {
             for (int j = 0; j < ROW; j++) {
-                if (field[j][i] == null) {
+                if (field[j][i]==null) {
                     gc.clearRect(pixelsField[i], pixelsField[j], RECT_SIZE, RECT_SIZE);
-                } else if (field[j][i] != null) {
+                } else if (field[j][i]!=null) {
                     gc.setFill(Color.GREY);
                     gc.fillRect(pixelsField[i], pixelsField[j], RECT_SIZE, RECT_SIZE);
                     gc.strokeRect(pixelsField[i], pixelsField[j], RECT_SIZE - 2, RECT_SIZE - 2);

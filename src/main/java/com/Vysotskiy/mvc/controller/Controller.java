@@ -2,11 +2,14 @@ package com.Vysotskiy.mvc.controller;
 
 import com.Vysotskiy.figures.Block;
 import com.Vysotskiy.figures.Figure;
+import com.Vysotskiy.mvc.controller.interfacesController.ControllingChangeField;
+import com.Vysotskiy.mvc.controller.interfacesController.ControllingMoveFigure;
+import com.Vysotskiy.mvc.controller.interfacesController.TramsmittingData;
 import com.Vysotskiy.mvc.model.Model;
 
 import javafx.scene.paint.Color;
 
-public class Controller implements ControllingMoveFigure, ControllingField, TramsmittingData {
+public class Controller implements ControllingMoveFigure, ControllingChangeField, TramsmittingData {
     Model model;
 
     public Controller(Model model) {
@@ -45,8 +48,8 @@ public class Controller implements ControllingMoveFigure, ControllingField, Tram
     }
 
     @Override
-    public boolean possibleFallFigure() {
-        return model.figureCanDrop();
+    public boolean checkingCanFigureFell() {
+        return model.checkingFigureCanDrop();
     }
 
     @Override
@@ -71,7 +74,7 @@ public class Controller implements ControllingMoveFigure, ControllingField, Tram
 
     @Override
     public long[] getLEVELS() {
-        return model.getLEVELS();
+        return model.getSPEED_LEVELS();
     }
 
     @Override

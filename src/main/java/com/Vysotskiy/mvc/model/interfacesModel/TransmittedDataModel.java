@@ -1,4 +1,4 @@
-package com.Vysotskiy.mvc.model;
+package com.Vysotskiy.mvc.model.interfacesModel;
 
 import com.Vysotskiy.figures.Block;
 
@@ -8,7 +8,7 @@ public interface TransmittedDataModel {
 
     boolean isGameOver();
 
-    long[] getLEVELS();
+    long[] getSPEED_LEVELS();
 
     int getGoal();
 
