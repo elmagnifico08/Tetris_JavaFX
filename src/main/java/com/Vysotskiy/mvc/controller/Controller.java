@@ -10,7 +10,7 @@ import com.Vysotskiy.mvc.model.Model;
 import javafx.scene.paint.Color;
 
 public class Controller implements ControllingMoveFigure, ControllingChangeField, TramsmittingData {
-    Model model;
+    private Model model;
 
     public Controller(Model model) {
         this.model = model;

@@ -14,7 +14,7 @@ import javafx.scene.text.Font;
 import lombok.Getter;
 
 public class View implements Viewable {
-    Controller controller;
+    private Controller controller;
 
     public View(Controller controller) {
         this.controller = controller;
