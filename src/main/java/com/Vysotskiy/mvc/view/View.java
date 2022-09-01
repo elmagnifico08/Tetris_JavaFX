@@ -1,7 +1,9 @@
 package com.Vysotskiy.mvc.view;
 
 import com.Vysotskiy.figures.Block;
-import com.Vysotskiy.mvc.controller.Controller;
+import com.Vysotskiy.mvc.controller.interfacesController.ControllingChangeField;
+import com.Vysotskiy.mvc.controller.interfacesController.ControllingMoveFigure;
+import com.Vysotskiy.mvc.controller.interfacesController.TramsmittingData;
 import com.Vysotskiy.mvc.view.interfacesView.Viewable;
 
 import java.util.stream.IntStream;
@@ -14,10 +16,15 @@ import javafx.scene.text.Font;
 import lombok.Getter;
 
 public class View implements Viewable {
-    private Controller controller;
+    ControllingMoveFigure controllingMoveFigure;
+    TramsmittingData tramsmittingData;
+    ControllingChangeField changeField;
 
-    public View(Controller controller) {
-        this.controller = controller;
+    public View(ControllingMoveFigure controllingMoveFigure, TramsmittingData tramsmittingData,
+                ControllingChangeField changeField) {
+        this.controllingMoveFigure = controllingMoveFigure;
+        this.tramsmittingData = tramsmittingData;
+        this.changeField = changeField;
     }
 
     private final int RECT_SIZE = 30;
@@ -37,10 +44,10 @@ public class View implements Viewable {
         eventHandler();
         Thread game = new Thread(() -> {
             drawScoreAndLevel();
-            while (!controller.isGameOver()) {
+            while (!tramsmittingData.isGameOver()) {
                 try {
-                    Thread.sleep(controller.getLEVELS()[controller.getThisLevel()]);
-                    if (controller.checkingCanFigureFell()) {
+                    Thread.sleep(tramsmittingData.getLEVELS()[tramsmittingData.getThisLevel()]);
+                    if (changeField.checkingCanFigureFell()) {
                         canMove();
                     } else {
                         canNotMove();
@@ -62,34 +69,34 @@ public class View implements Viewable {
         canvas.setOnKeyPressed(e -> {
             KeyCode key = e.getCode();
             if (key.equals(KeyCode.UP))
-                controller.changeAction();
+                controllingMoveFigure.changeAction();
             if (key.equals(KeyCode.DOWN))
-                controller.dropAction();
+                controllingMoveFigure.dropAction();
             if (key.equals(KeyCode.LEFT))
-                controller.leftAction();
+                controllingMoveFigure.leftAction();
             if (key.equals(KeyCode.RIGHT))
-                controller.rightAction();
+                controllingMoveFigure.rightAction();
             drawField();
         });
     }
 
     private void canMove() {
-        controller.figureCanFallDown();
+        changeField.figureCanFallDown();
         drawField();
     }
 
     private void canNotMove() {
-        controller.figureFellDown();
+        changeField.figureFellDown();
         drawScoreAndLevel();
         drawField();
     }
 
 
     private void drawField() {
-        clearField(controller.getField());
-        if (!controller.isGameOver()) {
-            gc.setFill(controller.getFigureColor());
-            for (Block a : controller.getThisFigure().getBlocks()) {
+        clearField(tramsmittingData.getField());
+        if (!tramsmittingData.isGameOver()) {
+            gc.setFill(tramsmittingData.getFigureColor());
+            for (Block a : tramsmittingData.getThisFigure().getBlocks()) {
                 gc.fillRect(pixelsField[a.getCol()], pixelsField[a.getRow()], RECT_SIZE, RECT_SIZE);
                 gc.strokeRect(pixelsField[a.getCol()], pixelsField[a.getRow()], RECT_SIZE - 2, RECT_SIZE - 2);
             }
@@ -110,9 +117,9 @@ public class View implements Viewable {
         gc.setStroke(Color.BLACK);
         gc.strokeLine(POSITION_STROKE_LINE, 0, POSITION_STROKE_LINE, SIZE_HIGH);
         gc.setFill(Color.BLACK);
-        gc.fillText("SCORES : " + controller.getGoal(), POSITION_STROKE_POINT_WIDTH_AND_LEVEL, POSITION_STROKE_POINT_HIGH);
+        gc.fillText("SCORES : " + tramsmittingData.getGoal(), POSITION_STROKE_POINT_WIDTH_AND_LEVEL, POSITION_STROKE_POINT_HIGH);
         gc.setFill(Color.RED);
-        gc.fillText("LEVEL :  " + controller.getThisLevel(), POSITION_STROKE_POINT_WIDTH_AND_LEVEL, POSITION_STROKE_LEVEL_HIGH);
+        gc.fillText("LEVEL :  " + tramsmittingData.getThisLevel(), POSITION_STROKE_POINT_WIDTH_AND_LEVEL, POSITION_STROKE_LEVEL_HIGH);
     }
 
     private void gameOver() {

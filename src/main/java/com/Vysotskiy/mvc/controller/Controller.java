@@ -5,85 +5,96 @@ import com.Vysotskiy.figures.Figure;
 import com.Vysotskiy.mvc.controller.interfacesController.ControllingChangeField;
 import com.Vysotskiy.mvc.controller.interfacesController.ControllingMoveFigure;
 import com.Vysotskiy.mvc.controller.interfacesController.TramsmittingData;
-import com.Vysotskiy.mvc.model.Model;
+import com.Vysotskiy.mvc.model.interfacesModel.FigureableData;
+import com.Vysotskiy.mvc.model.interfacesModel.MoveGameField;
+import com.Vysotskiy.mvc.model.interfacesModel.ReplaceablePositionFigure;
+import com.Vysotskiy.mvc.model.interfacesModel.TransmittedDataModel;
 
 import javafx.scene.paint.Color;
 
 public class Controller implements ControllingMoveFigure, ControllingChangeField, TramsmittingData {
-    private Model model;
 
-    public Controller(Model model) {
-        this.model = model;
+    ReplaceablePositionFigure replaceablePositionFigure;
+    MoveGameField moveGameField;
+    FigureableData figureableData;
+    TransmittedDataModel transmittedDataModel;
+
+    public Controller(ReplaceablePositionFigure replaceablePositionFigure, MoveGameField moveGameField,
+                      FigureableData figureableData, TransmittedDataModel transmittedDataModel) {
+        this.replaceablePositionFigure = replaceablePositionFigure;
+        this.moveGameField = moveGameField;
+        this.figureableData = figureableData;
+        this.transmittedDataModel = transmittedDataModel;
     }
 
     @Override
     public void rightAction() {
-        model.rightAction();
+        replaceablePositionFigure.rightAction();
     }
 
     @Override
     public void leftAction() {
-        model.leftAction();
+        replaceablePositionFigure.leftAction();
     }
 
     @Override
     public void dropAction() {
-        model.dropAction();
+        replaceablePositionFigure.dropAction();
     }
 
     @Override
     public void changeAction() {
-        model.changeAction();
+        replaceablePositionFigure.changeAction();
     }
 
 
     @Override
     public void figureFellDown() {
-        model.figureFell();
+        moveGameField.figureFell();
     }
 
     @Override
     public void figureCanFallDown() {
-        model.figureMoveDrop();
+        moveGameField.figureMoveDrop();
     }
 
     @Override
     public boolean checkingCanFigureFell() {
-        return model.checkingFigureCanDrop();
+        return moveGameField.checkingFigureCanDrop();
     }
 
     @Override
     public Color getFigureColor() {
-        return model.getColor();
+        return figureableData.getColor();
     }
 
     @Override
     public Figure getThisFigure() {
-        return model.getThisFigure();
+        return figureableData.getThisFigure();
     }
 
     @Override
     public Block[][] getField() {
-        return model.getField();
+        return transmittedDataModel.getField();
     }
 
     @Override
     public boolean isGameOver() {
-        return model.isGameOver();
+        return transmittedDataModel.isGameOver();
     }
 
     @Override
     public long[] getLEVELS() {
-        return model.getSPEED_LEVELS();
+        return transmittedDataModel.getSPEED_LEVELS();
     }
 
     @Override
     public int getGoal() {
-        return model.getGoal();
+        return transmittedDataModel.getGoal();
     }
 
     @Override
     public int getThisLevel() {
-        return model.getThisLevel();
+        return transmittedDataModel.getThisLevel();
     }
 }
