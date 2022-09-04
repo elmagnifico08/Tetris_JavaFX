@@ -2,8 +2,6 @@ package com.Vysotskiy.mvc.controller;
 
 import com.Vysotskiy.figures.Block;
 import com.Vysotskiy.figures.Figure;
-import com.Vysotskiy.mvc.controller.interfacesController.ControllingChangeField;
-import com.Vysotskiy.mvc.controller.interfacesController.ControllingMoveFigure;
 import com.Vysotskiy.mvc.controller.interfacesController.TramsmittingData;
 import com.Vysotskiy.mvc.model.interfacesModel.FigureableData;
 import com.Vysotskiy.mvc.model.interfacesModel.MoveGameField;
@@ -12,7 +10,7 @@ import com.Vysotskiy.mvc.model.interfacesModel.TransmittedDataModel;
 
 import javafx.scene.paint.Color;
 
-public class Controller implements ControllingMoveFigure, ControllingChangeField, TramsmittingData {
+public class Controller implements ReplaceablePositionFigure, MoveGameField, TramsmittingData {
 
     ReplaceablePositionFigure replaceablePositionFigure;
     MoveGameField moveGameField;
@@ -49,21 +47,6 @@ public class Controller implements ControllingMoveFigure, ControllingChangeField
 
 
     @Override
-    public void figureFellDown() {
-        moveGameField.figureFell();
-    }
-
-    @Override
-    public void figureCanFallDown() {
-        moveGameField.figureMoveDrop();
-    }
-
-    @Override
-    public boolean checkingCanFigureFell() {
-        return moveGameField.checkingFigureCanDrop();
-    }
-
-    @Override
     public Color getFigureColor() {
         return figureableData.getColor();
     }
@@ -97,5 +80,20 @@ public class Controller implements ControllingMoveFigure, ControllingChangeField
     @Override
     public int getThisLevel() {
         return transmittedDataModel.getThisLevel();
+    }
+
+    @Override
+    public void figureFell() {
+        moveGameField.figureFell();
+    }
+
+    @Override
+    public void figureMoveDrop() {
+        moveGameField.figureMoveDrop();
+    }
+
+    @Override
+    public boolean checkingFigureCanDrop() {
+        return moveGameField.checkingFigureCanDrop();
     }
 }

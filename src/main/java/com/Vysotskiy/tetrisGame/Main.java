@@ -1,8 +1,6 @@
 package com.Vysotskiy.tetrisGame;
 
 import com.Vysotskiy.mvc.controller.Controller;
-import com.Vysotskiy.mvc.controller.interfacesController.ControllingChangeField;
-import com.Vysotskiy.mvc.controller.interfacesController.ControllingMoveFigure;
 import com.Vysotskiy.mvc.controller.interfacesController.TramsmittingData;
 import com.Vysotskiy.mvc.model.Model;
 import com.Vysotskiy.mvc.model.interfacesModel.FigureableData;
@@ -24,8 +22,8 @@ public class Main extends Application {
     FigureableData figureableData = model;
     TransmittedDataModel transmittedDataModel = model;
     Controller controller = new Controller(replaceablePositionFigure, moveGameField, figureableData, transmittedDataModel);
-    ControllingChangeField controllingChangeField = controller;
-    ControllingMoveFigure controllingMoveFigure = controller;
+    MoveGameField controllingChangeField = controller;
+    ReplaceablePositionFigure controllingMoveFigure = controller;
     TramsmittingData tramsmittingData = controller;
     View view = new View(controllingMoveFigure,tramsmittingData,controllingChangeField);
 

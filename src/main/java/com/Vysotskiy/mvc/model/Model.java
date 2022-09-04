@@ -86,39 +86,37 @@ public class Model implements MoveGameField, ReplaceablePositionFigure, Transmit
     }
 
     @Override
-    public Figure rightAction() {
+    public void rightAction() {
         if (Arrays.stream(thisFigure.getBlocks()).noneMatch(e -> e.getCol()==COL - 1
                 || field[e.getRow()][e.getCol() + 1]!=null)) {
             thisFigure.moveRight();
         }
-        return thisFigure;
+
     }
 
     @Override
-    public Figure leftAction() {
+    public void leftAction() {
         if (Arrays.stream(thisFigure.getBlocks()).noneMatch(e -> e.getCol()==0
                 || field[e.getRow()][e.getCol() - 1]!=null)) {
             thisFigure.moveLeft();
         }
-        return thisFigure;
     }
 
     @Override
-    public Figure dropAction() {
+    public void dropAction() {
         if (checkingFigureCanDrop()) {
             thisFigure.moveDrop();
         }
-        return thisFigure;
+
     }
 
     @Override
-    public Figure changeAction() {
+    public void changeAction() {
         thisFigure.moveChange();
         if (Arrays.stream(thisFigure.getState()).noneMatch(e -> e.getCol() > 9 || e.getCol() < 0
                 || e.getRow() < 0 || field[e.getRow()][e.getCol()]!=null)) {
             thisFigure.setBlocks(thisFigure.getState());
         }
-        return thisFigure;
     }
 
     private void addFigureToField() {

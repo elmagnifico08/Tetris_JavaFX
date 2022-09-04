@@ -1,9 +1,9 @@
 package com.Vysotskiy.mvc.view;
 
 import com.Vysotskiy.figures.Block;
-import com.Vysotskiy.mvc.controller.interfacesController.ControllingChangeField;
-import com.Vysotskiy.mvc.controller.interfacesController.ControllingMoveFigure;
 import com.Vysotskiy.mvc.controller.interfacesController.TramsmittingData;
+import com.Vysotskiy.mvc.model.interfacesModel.MoveGameField;
+import com.Vysotskiy.mvc.model.interfacesModel.ReplaceablePositionFigure;
 import com.Vysotskiy.mvc.view.interfacesView.Viewable;
 
 import java.util.stream.IntStream;
@@ -16,12 +16,12 @@ import javafx.scene.text.Font;
 import lombok.Getter;
 
 public class View implements Viewable {
-    ControllingMoveFigure controllingMoveFigure;
+    ReplaceablePositionFigure controllingMoveFigure;
     TramsmittingData tramsmittingData;
-    ControllingChangeField changeField;
+    MoveGameField changeField;
 
-    public View(ControllingMoveFigure controllingMoveFigure, TramsmittingData tramsmittingData,
-                ControllingChangeField changeField) {
+    public View(ReplaceablePositionFigure controllingMoveFigure, TramsmittingData tramsmittingData,
+                MoveGameField changeField) {
         this.controllingMoveFigure = controllingMoveFigure;
         this.tramsmittingData = tramsmittingData;
         this.changeField = changeField;
@@ -55,7 +55,7 @@ public class View implements Viewable {
             while (!tramsmittingData.isGameOver()) {
                 try {
                     Thread.sleep(tramsmittingData.getLEVELS()[tramsmittingData.getThisLevel()]);
-                    if (changeField.checkingCanFigureFell()) {
+                    if (changeField.checkingFigureCanDrop()) {
                         canMove();
                     } else {
                         canNotMove();
@@ -89,12 +89,12 @@ public class View implements Viewable {
     }
 
     private void canMove() {
-        changeField.figureCanFallDown();
+        changeField.figureMoveDrop();
         drawField();
     }
 
     private void canNotMove() {
-        changeField.figureFellDown();
+        changeField.figureFell();
         drawScoreAndLevel();
         drawField();
     }
