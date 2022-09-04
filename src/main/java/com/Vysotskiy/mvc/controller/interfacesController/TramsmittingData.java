@@ -1,17 +1,14 @@
 package com.Vysotskiy.mvc.controller.interfacesController;
 
-import com.Vysotskiy.figures.Block;
 import com.Vysotskiy.figures.Figure;
-
-import javafx.scene.paint.Color;
 
 public interface TramsmittingData {
 
-    Color getFigureColor();
+    <T> T getFigureColor();
 
     Figure getThisFigure();
 
-    Block[][] getField();
+    <T> T[][] getField();
 
     boolean isGameOver();
 

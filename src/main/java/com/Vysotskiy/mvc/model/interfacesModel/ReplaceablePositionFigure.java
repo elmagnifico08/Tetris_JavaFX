@@ -1,18 +1,15 @@
 package com.Vysotskiy.mvc.model.interfacesModel;
 
-import com.Vysotskiy.figures.Figure;
-
-
 public interface ReplaceablePositionFigure  {
 
-    Figure rightAction();
+    <T> T rightAction();
 
 
-    Figure leftAction();
+    <T> T leftAction();
 
 
-    Figure dropAction();
+    <T> T dropAction();
 
 
-    Figure changeAction();
+    <T> T changeAction();
 }

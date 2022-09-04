@@ -27,6 +27,7 @@ public class View implements Viewable {
         this.changeField = changeField;
     }
 
+
     private final int RECT_SIZE = 30;
     private final int ROW = 20;
     private final int COL = 10;
@@ -35,6 +36,13 @@ public class View implements Viewable {
     @Getter
     private final int SIZE_WIDTH = COL * RECT_SIZE + RECT_SIZE * 4;
     private final int[] pixelsField = convToPixel(ROW, RECT_SIZE);
+    private final int POSITION_STROKE_POINT_WIDTH_AND_LEVEL = SIZE_WIDTH - RECT_SIZE * 4 + 5;
+    private final int POSITION_STROKE_POINT_HIGH = RECT_SIZE * 3;
+    private final int POSITION_STROKE_LINE = SIZE_WIDTH - RECT_SIZE * 4;
+    private final int POSITION_SCORES = SIZE_WIDTH - RECT_SIZE * 3;
+    private final int POSITION_STROKE_LEVEL_HIGH = RECT_SIZE * 5;
+    private final int POSITION_WIDTH_STROKE_GAME_OVER = SIZE_WIDTH / 2 - 50;
+    private final int POSITION_HIGH_STROKE_GAME_OVER = SIZE_HIGH / 2;
 
     Canvas canvas = new Canvas(SIZE_WIDTH, SIZE_HIGH);
     GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -107,11 +115,6 @@ public class View implements Viewable {
 
 
     private void drawScoreAndLevel() {
-        int POSITION_STROKE_POINT_WIDTH_AND_LEVEL = SIZE_WIDTH - RECT_SIZE * 4 + 5;
-        int POSITION_STROKE_POINT_HIGH = RECT_SIZE * 3;
-        int POSITION_STROKE_LINE = SIZE_WIDTH - RECT_SIZE * 4;
-        int POSITION_SCORES = SIZE_WIDTH - RECT_SIZE * 3;
-        int POSITION_STROKE_LEVEL_HIGH = RECT_SIZE * 5;
         gc.clearRect(POSITION_SCORES, 0, POSITION_SCORES, SIZE_HIGH);
         gc.setFont(new Font("Times New Roman", 17));
         gc.setStroke(Color.BLACK);
@@ -123,8 +126,6 @@ public class View implements Viewable {
     }
 
     private void gameOver() {
-        int POSITION_WIDTH_STROKE_GAME_OVER = SIZE_WIDTH / 2 - 50;
-        int POSITION_HIGH_STROKE_GAME_OVER = SIZE_HIGH / 2;
         gc.setFont(new Font("Times New Roman", 50));
         gc.setFill(Color.BLACK);
         gc.fillText("GAME OVER", POSITION_WIDTH_STROKE_GAME_OVER, POSITION_HIGH_STROKE_GAME_OVER, 200);

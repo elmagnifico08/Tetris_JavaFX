@@ -70,13 +70,14 @@ public class Controller implements ControllingMoveFigure, ControllingChangeField
 
     @Override
     public Figure getThisFigure() {
-        return figureableData.getThisFigure();
+        return  figureableData.getThisFigure();
     }
 
     @Override
     public Block[][] getField() {
         return transmittedDataModel.getField();
     }
+
 
     @Override
     public boolean isGameOver() {

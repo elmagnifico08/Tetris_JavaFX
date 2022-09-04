@@ -1,10 +1,8 @@
 package com.Vysotskiy.mvc.model.interfacesModel;
 
-import com.Vysotskiy.figures.Block;
-
 public interface TransmittedDataModel {
 
-    Block[][] getField();
+    <T> T[][] getField();
 
     boolean isGameOver();
 

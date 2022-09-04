@@ -180,4 +180,5 @@ public class Model implements MoveGameField, ReplaceablePositionFigure, Transmit
     }
 
 
+
 }
