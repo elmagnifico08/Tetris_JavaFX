@@ -8,6 +8,7 @@ import com.Vysotskiy.mvc.model.interfacesModel.MoveGameField;
 import com.Vysotskiy.mvc.controller.interfacesController.ReplaceablePositionFigure;
 import com.Vysotskiy.mvc.model.interfacesModel.TransmittedDataModel;
 import com.Vysotskiy.mvc.view.View;
+import com.Vysotskiy.mvc.view.interfacesView.Viewable;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -25,18 +26,19 @@ public class Main extends Application {
     ReplaceablePositionFigure controllingMoveFigure = controller;
     TransmittingData transmittingData = controller;
     View view = new View(controllingMoveFigure, transmittingData,controllingChangeField);
+    Viewable viewable = view;
 
     @Override
     public void start(Stage primaryStage) {
         FlowPane root = new FlowPane();
-        view.getCanvas().setFocusTraversable(true);
-        root.getChildren().add(view.getCanvas());
+        viewable.getCanvas().setFocusTraversable(true);
+        root.getChildren().add(viewable.getCanvas());
         primaryStage.setResizable(false);
-        Scene scene = new Scene(root, view.getSIZE_WIDTH(), view.getSIZE_HIGH(), Color.SKYBLUE);
+        Scene scene = new Scene(root, viewable.getSIZE_WIDTH(), viewable.getSIZE_HIGH(), Color.SKYBLUE);
         primaryStage.setTitle("I am T_E_T_R_I_S");
         primaryStage.setScene(scene);
         primaryStage.show();
-        view.viewStartGame();
+        viewable.viewStartGame();
     }
 
     public static void main(String[] args) {
