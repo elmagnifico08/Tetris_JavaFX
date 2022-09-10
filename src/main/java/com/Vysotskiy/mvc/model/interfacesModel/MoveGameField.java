@@ -7,6 +7,4 @@ public interface MoveGameField {
     void figureMoveDrop();
 
     boolean checkingFigureCanDrop();
-
-
 }

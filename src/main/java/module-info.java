@@ -10,6 +10,7 @@ module com.example.tetris_javafx {
     exports com.Vysotskiy.figures;
     exports com.Vysotskiy.mvc.model;
     exports com.Vysotskiy.mvc.model.interfacesModel;
+    exports com.Vysotskiy.mvc.controller.interfacesController;
 
 
 }

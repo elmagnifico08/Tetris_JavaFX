@@ -2,22 +2,24 @@ package com.Vysotskiy.mvc.controller;
 
 import com.Vysotskiy.figures.Block;
 import com.Vysotskiy.figures.Figure;
-import com.Vysotskiy.mvc.controller.interfacesController.TramsmittingData;
+import com.Vysotskiy.mvc.controller.interfacesController.TransmittingData;
 import com.Vysotskiy.mvc.model.interfacesModel.FigureableData;
 import com.Vysotskiy.mvc.model.interfacesModel.MoveGameField;
-import com.Vysotskiy.mvc.model.interfacesModel.ReplaceablePositionFigure;
+import com.Vysotskiy.mvc.controller.interfacesController.ReplaceablePositionFigure;
 import com.Vysotskiy.mvc.model.interfacesModel.TransmittedDataModel;
+
+import java.util.Arrays;
 
 import javafx.scene.paint.Color;
 
-public class Controller implements ReplaceablePositionFigure, MoveGameField, TramsmittingData {
+public class Controller implements ReplaceablePositionFigure, MoveGameField, TransmittingData {
 
     ReplaceablePositionFigure replaceablePositionFigure;
     MoveGameField moveGameField;
     FigureableData figureableData;
     TransmittedDataModel transmittedDataModel;
 
-    public Controller(ReplaceablePositionFigure replaceablePositionFigure, MoveGameField moveGameField,
+    public Controller( MoveGameField moveGameField,
                       FigureableData figureableData, TransmittedDataModel transmittedDataModel) {
         this.replaceablePositionFigure = replaceablePositionFigure;
         this.moveGameField = moveGameField;
@@ -25,24 +27,39 @@ public class Controller implements ReplaceablePositionFigure, MoveGameField, Tra
         this.transmittedDataModel = transmittedDataModel;
     }
 
+
     @Override
     public void rightAction() {
-        replaceablePositionFigure.rightAction();
+        if (Arrays.stream(figureableData.getThisFigure().getBlocks()).noneMatch(e -> e.getCol()== transmittedDataModel.getCol()-1
+                || transmittedDataModel.getField()[e.getRow()][e.getCol() + 1]!=null)) {
+            figureableData.getThisFigure().moveRight();
+        }
+
     }
 
     @Override
     public void leftAction() {
-        replaceablePositionFigure.leftAction();
+        if (Arrays.stream(figureableData.getThisFigure().getBlocks()).noneMatch(e -> e.getCol()==0
+                || transmittedDataModel.getField()[e.getRow()][e.getCol() - 1]!=null)) {
+            figureableData.getThisFigure().moveLeft();
+        }
     }
 
     @Override
     public void dropAction() {
-        replaceablePositionFigure.dropAction();
+        if (checkingFigureCanDrop()) {
+            figureableData.getThisFigure().moveDrop();
+        }
+
     }
 
     @Override
     public void changeAction() {
-        replaceablePositionFigure.changeAction();
+        figureableData.getThisFigure().moveChange();
+        if (Arrays.stream(figureableData.getThisFigure().getState()).noneMatch(e -> e.getCol() > 9 || e.getCol() < 0
+                || e.getRow() < 0 || transmittedDataModel.getField()[e.getRow()][e.getCol()]!=null)) {
+            figureableData.getThisFigure().setBlocks(figureableData.getThisFigure().getState());
+        }
     }
 
 

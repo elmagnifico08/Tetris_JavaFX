@@ -1,11 +1,11 @@
 package com.Vysotskiy.tetrisGame;
 
 import com.Vysotskiy.mvc.controller.Controller;
-import com.Vysotskiy.mvc.controller.interfacesController.TramsmittingData;
+import com.Vysotskiy.mvc.controller.interfacesController.TransmittingData;
 import com.Vysotskiy.mvc.model.Model;
 import com.Vysotskiy.mvc.model.interfacesModel.FigureableData;
 import com.Vysotskiy.mvc.model.interfacesModel.MoveGameField;
-import com.Vysotskiy.mvc.model.interfacesModel.ReplaceablePositionFigure;
+import com.Vysotskiy.mvc.controller.interfacesController.ReplaceablePositionFigure;
 import com.Vysotskiy.mvc.model.interfacesModel.TransmittedDataModel;
 import com.Vysotskiy.mvc.view.View;
 
@@ -17,15 +17,14 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     Model model = new Model();
-    ReplaceablePositionFigure replaceablePositionFigure = model;
     MoveGameField moveGameField = model;
     FigureableData figureableData = model;
     TransmittedDataModel transmittedDataModel = model;
-    Controller controller = new Controller(replaceablePositionFigure, moveGameField, figureableData, transmittedDataModel);
+    Controller controller = new Controller(moveGameField, figureableData, transmittedDataModel);
     MoveGameField controllingChangeField = controller;
     ReplaceablePositionFigure controllingMoveFigure = controller;
-    TramsmittingData tramsmittingData = controller;
-    View view = new View(controllingMoveFigure,tramsmittingData,controllingChangeField);
+    TransmittingData transmittingData = controller;
+    View view = new View(controllingMoveFigure, transmittingData,controllingChangeField);
 
     @Override
     public void start(Stage primaryStage) {

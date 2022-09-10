@@ -1,6 +1,7 @@
 package com.Vysotskiy.mvc.model.interfacesModel;
 
 public interface TransmittedDataModel {
+    int getCol();
 
     <T> T[][] getField();
 

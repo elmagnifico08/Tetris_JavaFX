@@ -1,4 +1,4 @@
-package com.Vysotskiy.mvc.model.interfacesModel;
+package com.Vysotskiy.mvc.controller.interfacesController;
 
 public interface ReplaceablePositionFigure  {
 

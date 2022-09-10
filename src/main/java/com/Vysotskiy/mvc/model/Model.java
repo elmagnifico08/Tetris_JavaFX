@@ -11,57 +11,44 @@ import com.Vysotskiy.figures.T;
 import com.Vysotskiy.figures.Z;
 import com.Vysotskiy.mvc.model.interfacesModel.FigureableData;
 import com.Vysotskiy.mvc.model.interfacesModel.MoveGameField;
-import com.Vysotskiy.mvc.model.interfacesModel.ReplaceablePositionFigure;
 import com.Vysotskiy.mvc.model.interfacesModel.TransmittedDataModel;
 
 import java.util.Arrays;
 import java.util.Objects;
 
 import javafx.scene.paint.Color;
+import lombok.Getter;
 
 
-public class Model implements MoveGameField, ReplaceablePositionFigure, TransmittedDataModel, FigureableData {
+public class Model implements MoveGameField, TransmittedDataModel, FigureableData {
     final private int ROW = 20;
     final private int COL = 10;
     private final int MIN_NUM_OF_POINT = 10;
     private final int MAX_POINT_GO_TO_NEXT_LEVEL = 310;
+    @Getter
     private final long[] SPEED_LEVELS = new long[]{700, 500, 275, 180};
+    @Getter
     private final Block[][] field = new Block[ROW][COL];
+    @Getter
     private Figure thisFigure = randomFigure();
     private Figure nextFigure = randomFigure();
+    @Getter
     private int thisLevel = 0;
+    @Getter
     private int goal = 0;
+    @Getter
     private boolean gameOver = false;
 
 
     @Override
-    public boolean isGameOver() {
-        return gameOver;
-    }
-
-    @Override
-    public long[] getSPEED_LEVELS() {
-        return SPEED_LEVELS;
-    }
-
-    @Override
-    public int getGoal() {
-        return goal;
-    }
-
-    @Override
-    public int getThisLevel() {
-        return thisLevel;
-    }
-    @Override
-    public Figure getThisFigure() {
-        return thisFigure;
-    }
-
-    @Override
     public Color getColor() {
-        return  thisFigure.getColor();
+        return thisFigure.getColor();
     }
+    @Override
+    public int getCol() {
+        return COL;
+    }
+
     @Override
     public void figureFell() {
         addFigureToField();
@@ -80,44 +67,6 @@ public class Model implements MoveGameField, ReplaceablePositionFigure, Transmit
                 || field[e.getRow() + 1][e.getCol()]!=null);
     }
 
-    @Override
-    public Block[][] getField() {
-        return field;
-    }
-
-    @Override
-    public void rightAction() {
-        if (Arrays.stream(thisFigure.getBlocks()).noneMatch(e -> e.getCol()==COL - 1
-                || field[e.getRow()][e.getCol() + 1]!=null)) {
-            thisFigure.moveRight();
-        }
-
-    }
-
-    @Override
-    public void leftAction() {
-        if (Arrays.stream(thisFigure.getBlocks()).noneMatch(e -> e.getCol()==0
-                || field[e.getRow()][e.getCol() - 1]!=null)) {
-            thisFigure.moveLeft();
-        }
-    }
-
-    @Override
-    public void dropAction() {
-        if (checkingFigureCanDrop()) {
-            thisFigure.moveDrop();
-        }
-
-    }
-
-    @Override
-    public void changeAction() {
-        thisFigure.moveChange();
-        if (Arrays.stream(thisFigure.getState()).noneMatch(e -> e.getCol() > 9 || e.getCol() < 0
-                || e.getRow() < 0 || field[e.getRow()][e.getCol()]!=null)) {
-            thisFigure.setBlocks(thisFigure.getState());
-        }
-    }
 
     private void addFigureToField() {
         for (Block c : thisFigure.getBlocks()) {
@@ -178,5 +127,7 @@ public class Model implements MoveGameField, ReplaceablePositionFigure, Transmit
     }
 
 
-
 }
+
+
+

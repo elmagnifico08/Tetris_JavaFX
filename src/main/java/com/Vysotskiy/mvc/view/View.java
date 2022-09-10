@@ -1,9 +1,9 @@
 package com.Vysotskiy.mvc.view;
 
 import com.Vysotskiy.figures.Block;
-import com.Vysotskiy.mvc.controller.interfacesController.TramsmittingData;
+import com.Vysotskiy.mvc.controller.interfacesController.TransmittingData;
 import com.Vysotskiy.mvc.model.interfacesModel.MoveGameField;
-import com.Vysotskiy.mvc.model.interfacesModel.ReplaceablePositionFigure;
+import com.Vysotskiy.mvc.controller.interfacesController.ReplaceablePositionFigure;
 import com.Vysotskiy.mvc.view.interfacesView.Viewable;
 
 import java.util.stream.IntStream;
@@ -17,13 +17,13 @@ import lombok.Getter;
 
 public class View implements Viewable {
     ReplaceablePositionFigure controllingMoveFigure;
-    TramsmittingData tramsmittingData;
+    TransmittingData transmittingData;
     MoveGameField changeField;
 
-    public View(ReplaceablePositionFigure controllingMoveFigure, TramsmittingData tramsmittingData,
+    public View(ReplaceablePositionFigure controllingMoveFigure, TransmittingData transmittingData,
                 MoveGameField changeField) {
         this.controllingMoveFigure = controllingMoveFigure;
-        this.tramsmittingData = tramsmittingData;
+        this.transmittingData = transmittingData;
         this.changeField = changeField;
     }
 
@@ -52,9 +52,9 @@ public class View implements Viewable {
         eventHandler();
         Thread game = new Thread(() -> {
             drawScoreAndLevel();
-            while (!tramsmittingData.isGameOver()) {
+            while (!transmittingData.isGameOver()) {
                 try {
-                    Thread.sleep(tramsmittingData.getLEVELS()[tramsmittingData.getThisLevel()]);
+                    Thread.sleep(transmittingData.getLEVELS()[transmittingData.getThisLevel()]);
                     if (changeField.checkingFigureCanDrop()) {
                         canMove();
                     } else {
@@ -101,10 +101,10 @@ public class View implements Viewable {
 
 
     private void drawField() {
-        clearField(tramsmittingData.getField());
-        if (!tramsmittingData.isGameOver()) {
-            gc.setFill(tramsmittingData.getFigureColor());
-            for (Block a : tramsmittingData.getThisFigure().getBlocks()) {
+        clearField(transmittingData.getField());
+        if (!transmittingData.isGameOver()) {
+            gc.setFill(transmittingData.getFigureColor());
+            for (Block a : transmittingData.getThisFigure().getBlocks()) {
                 gc.fillRect(pixelsField[a.getCol()], pixelsField[a.getRow()], RECT_SIZE, RECT_SIZE);
                 gc.strokeRect(pixelsField[a.getCol()], pixelsField[a.getRow()], RECT_SIZE - 2, RECT_SIZE - 2);
             }
@@ -120,9 +120,9 @@ public class View implements Viewable {
         gc.setStroke(Color.BLACK);
         gc.strokeLine(POSITION_STROKE_LINE, 0, POSITION_STROKE_LINE, SIZE_HIGH);
         gc.setFill(Color.BLACK);
-        gc.fillText("SCORES : " + tramsmittingData.getGoal(), POSITION_STROKE_POINT_WIDTH_AND_LEVEL, POSITION_STROKE_POINT_HIGH);
+        gc.fillText("SCORES : " + transmittingData.getGoal(), POSITION_STROKE_POINT_WIDTH_AND_LEVEL, POSITION_STROKE_POINT_HIGH);
         gc.setFill(Color.RED);
-        gc.fillText("LEVEL :  " + tramsmittingData.getThisLevel(), POSITION_STROKE_POINT_WIDTH_AND_LEVEL, POSITION_STROKE_LEVEL_HIGH);
+        gc.fillText("LEVEL :  " + transmittingData.getThisLevel(), POSITION_STROKE_POINT_WIDTH_AND_LEVEL, POSITION_STROKE_LEVEL_HIGH);
     }
 
     private void gameOver() {

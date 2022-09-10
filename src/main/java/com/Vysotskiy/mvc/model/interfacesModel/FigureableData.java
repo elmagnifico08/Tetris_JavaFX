@@ -1,7 +1,9 @@
 package com.Vysotskiy.mvc.model.interfacesModel;
 
+import com.Vysotskiy.figures.Figure;
+
 public interface FigureableData  {
-    <T> T getThisFigure();
+    Figure getThisFigure();
     <T> T getColor();
 
 
